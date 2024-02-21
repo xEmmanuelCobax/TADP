@@ -3,14 +3,14 @@ from flask import Flask, render_template, request, redirect, url_for
 user = ""
 app = Flask(__name__) 
 
+usuarios = {
+    'u@1': 'c1',
+    'u@2': 'c2'
+}
+
 @app.route('/')
 def index(): 
-    data={
-        'titulo':'Página plantilla',
-        'mensaje':'Bienvenido al sitio Web ',
-        'nombre' : 'Emmanuel Jesus Coba Cuevas'
-        }
-    return render_template('index.html',data=data)  
+    return render_template('index.html')  
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -18,15 +18,25 @@ def login():
         username = request.form['username']
         password = request.form['password']
 
-        if (username == 'u' and password == '1'):
-            user = username
-            error_message = "todo correcto"
+        if username in usuarios and usuarios[username] == password:
             return redirect ("/page1/" + user)
 
         else:
             error_message = "Usuario o contraseña incorrecta"
-            print (error_message)
+            return render_template ('login.html', error_message=error_message)
     return render_template('login.html') 
+
+@app.route('/sign',  methods=['GET', 'POST'])
+def sign(): 
+    if request.method == 'POST':
+        username = request.form.get('username')
+        password = request.form.get('password')
+        if username in usuarios:
+            error_message = "El usuario ya existe. Por favor, elige otro nombre de usuario."
+            return render_template ('sign.html', error_message=error_message)
+        else:
+            usuarios[username] = password
+    return render_template('sign.html')  
 
 @app.route('/page1/<user>')
 def saludo(user):
