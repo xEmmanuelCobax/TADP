@@ -1,5 +1,7 @@
 # author: Emmanuel Jesus Coba Cuevas
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, send_from_directory
+import os
+
 user = ""
 app = Flask(__name__) 
 
@@ -7,6 +9,9 @@ usuarios = {
     'u@1': 'c1',
     'u@2': 'c2'
 }
+@app.route('/static/<path:path>')
+def send_static(path):
+    return send_from_directory('static', path)
 
 @app.route('/')
 def index(): 
@@ -19,7 +24,7 @@ def login():
         password = request.form['password']
 
         if username in usuarios and usuarios[username] == password:
-            return redirect ("/page1/" + user)
+            return redirect (url_for('saludo', user=username))
 
         else:
             error_message = "Usuario o contraseña incorrecta"
@@ -42,3 +47,6 @@ def sign():
 def saludo(user):
     return '<h2>hola '+ user +'</h2>'
 app.run(debug=True) 
+
+if __name__ == '__main__':
+    app.run(debug=True)
