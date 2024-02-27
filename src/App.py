@@ -50,6 +50,11 @@ def signup():
             return render_template ('signup.html', error_message=error_message)
         else:
             usuarios[username] = password
+            try:
+                with open('usuarios.json', 'w') as file:
+                    json.dump(usuarios, file, indent=4)
+            except Exception as e:
+                print(f"Error al escribir en el archivo JSON: {e}")
     return render_template('signup.html')  
 
 @app.route('/page1/<user>')
