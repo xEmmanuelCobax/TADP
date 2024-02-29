@@ -5,30 +5,22 @@ app = Flask(__name__)
 
 @app.route('/')
 def index(): 
-    data={
-        'titulo':'Página plantilla',
-        'mensaje':'Bienvenido al sitio Web ',
-        'nombre' : 'Emmanuel Jesus Coba Cuevas'
-        }
-    return render_template('index.html',data=data)  
+    
+    return render_template('index.html') 
 
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
+@app.route('/conocerme')
+def conocerme(): 
+    
+    return render_template('conocerme.html') 
 
-        if (username == 'u' and password == '1'):
-            user = username
-            error_message = "todo correcto"
-            return redirect ("/page1/" + user)
-
-        else:
-            error_message = "Usuario o contraseña incorrecta"
-            print (error_message)
-    return render_template('login.html') 
-
-@app.route('/page1/<user>')
-def saludo(user):
-    return '<h2>hola '+ user +'</h2>'
+@app.route('/habilidades')
+def habilidades(): 
+    
+    return render_template('habilidades.html') 
+"""
+@app.route('/')
+def index(): 
+    
+    return render_template('index.html')  
+"""
 app.run(debug=True) 
