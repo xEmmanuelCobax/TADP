@@ -1,0 +1,31 @@
+/* Para letras responsivas */
+body {
+    font-size: 1.5vw; /* El tamaño de la letra será el 1.5% del ancho de la ventana del navegador */
+}
+
+/* Otros estilos */
+h1 {
+    font-size: 2.5vw; /* Tamaño de letra más grande para títulos */
+}
+
+p {
+    font-size: 1vw; /* Tamaño de letra más pequeño para párrafos */
+}
+
+/* Estilos para pantallas pequeñas */
+@media screen and (max-width: 768px) {
+    body {
+        font-size: 1.2vw;
+    }
+
+    /* Otros estilos para pantallas pequeñas */
+}
+
+/* Estilos para pantallas medianas y grandes */
+@media screen and (min-width: 768px) {
+    body {
+        font-size: 1vw;
+    }
+
+    /* Otros estilos para pantallas medianas y grandes */
+}
