@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+{% extends 'base.HTML' %}
+<html lang="es">
+
+<head>
+    <title>SignUp</title>
+
+</head>
+
+<body>
+    {% block contenido %}
+    <main id="main" role="main">
+        <div class="d-flex align-items-center justify-content-center vh-100">
+            <div class="text-center">
+                <img class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto"
+                    src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg3dXkzEl-KByDxr6wT93NqZWxkHkR1zSI9FNeYs-6Xkvzo0yhqWy47Yx7B-fxKtESQtc1DpKqxfKv04oDJt9ANVNnkVjYgj-UYzXX6Mz09IPesmUbq_eR8_KOJhWGLOlywzUEqbIl4g7Q/s1600/estar+bien.png"
+                    alt="Imagen de marca de verificación" width="200" height="200">
+                <h1 class="featurette-heading fw-normal lh-1" style="font-size: 5vw;">¡MUCHAS GRACIAS!</h1>
+                <p class="lead" style="font-size: 2vw;"> <span class="text-align">TU REGISTRO HA SIDO EXITOSO</span></p>
+            </div>
+        </div>
+        {% endblock %}
+        {% block javascript %}
+        <script>
+            setTimeout(function () {
+                window.location.href = "{{ url_for('index') }}";
+            }, 3000);
+        </script>
+        {% endblock %}
+    </main>
+</body>
+
+
+</html>

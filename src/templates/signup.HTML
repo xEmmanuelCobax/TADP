@@ -6,19 +6,26 @@
     <title>SignUp</title>
 </head>
 
-<body>
+<main id="main" role="main">
     {% block contenido %}
     <div class="container col-xl-10 col-xxl-8 px-4 py-5">
         <div class="row align-items-center g-lg-5 py-5">
             <div class="col-lg-7 text-center text-lg-start">
                 <h1 class="display-4 fw-bold lh-1 text-body-emphasis mb-3">Sign Up</h1>
                 <p class="col-lg-10 fs-4">Enter your email and password</p>
+                {% if error_message %}
+                <p class="col-lg-10 fs-4">{{ error_message }}</p>
+                {% endif %}
             </div>
             <div class="col-md-10 mx-auto col-lg-5">
                 <form class="p-4 p-md-5 border rounded-3 bg-body-tertiary" method="post">
                     <div class="form-floating mb-3">
-                        <input type="email" class="form-control" id="username" name="username">
-                        <label for="username">Email address</label>
+                        <input type="Username" class="form-control" id="username" name="username">
+                        <label for="username">Name</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="email" class="form-control" id="email" name="email">
+                        <label for="email">Email address</label>
                     </div>
                     <div class="form-floating mb-3">
                         <input type="password" class="form-control" id="password" name="password">
@@ -28,32 +35,11 @@
                     <hr class="my-4">
                     <small class="text-body-secondary">By clicking Sign up, you agree to the terms of use.</small>
                 </form>
-                {% if error_message %}
-                <div style="color: red;">{{ error_message }}</div>
-                {% endif %}
             </div>
         </div>
     </div>
-
-    <!--
-<div style="color: blue;" class="container">
-    <h2>Sign</h2>
-    <form method="post">
-        <div class="form-group">
-            <label for="username">Username:</label>
-            <input type="text" class="form-control" id="username" name="username">
-        </div>
-        <div class="form-group">
-            <label for="password">Password:</label>
-            <input type="password" class="form-control" id="password" name="password">
-        </div>
-        <button type="submit" class="btn btn-primary">login</button>
-    </form>
-    {% if error_message %}
-    <div style="color: red;">{{ error_message }}</div>
-    {% endif %}
-</div>-->
     {% endblock %}
-</body>
-
+    {% block javascript %}
+    {% endblock %}
+</main>
 </html>
