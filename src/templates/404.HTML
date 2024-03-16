@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+
+<html lang="es">
+
+<head>
+    {% extends 'base.HTML' %}
+    <title>index</title>
+</head>
+
+{% block contenido %}
+
+<body>
+    <div class="d-flex align-items-center justify-content-center vh-100">
+        <div class="text-center">
+            <h1 class="featurette-heading fw-normal lh-1" style="font-size: 10vw;">404</h1>
+            <p class="lead" style="font-size: 2vw;"> <span class="text-danger">Opps!</span> Pagina no encontrada.</p>
+            <p class="lead" style="font-size: 2vw;">
+                La página que estás buscando no existe.
+            </p>
+            <a href="{{ url_for('index') }}" class="btn btn-primary">Home</a>
+        </div>
+    </div>
+</body>
+{% endblock %}
+
+</html>

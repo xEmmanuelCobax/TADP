@@ -18,11 +18,8 @@ def send_static(path):
 
 @app.route('/')
 def index(): 
-    return render_template('index.html')  
+    return render_template('index.html') 
 
-@app.route('/prueba')
-def prueba(): 
-    return render_template('bc.html')  
 #Registarse
 @app.route('/sign', methods=['GET', 'POST'])
 def sign():
@@ -60,7 +57,20 @@ def signup():
 @app.route('/page1/<user>')
 def saludo(user):
     return '<h2>hola '+ user +'</h2>'
-app.run(debug=True) 
 
+@app.route('/buscar', methods=['GET'])
+
+def buscar():
+    query = request.args.get('query')  # Obtener la consulta de búsqueda de la URL
+    if query == 'index':
+        return redirect(url_for('index'))  # Redirigir a la página 'Conocerme'
+    elif query == 'signup':
+        return redirect(url_for('signup'))  # Redirigir a la página 'Formacion'
+    elif query == 'sign':
+        return redirect(url_for('sign'))  # Redirigir a la página 'Habilidades'
+    else:
+        return render_template('404.html', query=query)  # Página no encontrada
+    
 if __name__ == '__main__':
     app.run(debug=True)
+
