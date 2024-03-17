@@ -1,3 +1,8 @@
+img {
+    max-width: 100%; /* Imágenes no superarán el ancho del contenedor */
+    height: auto; /* Altura ajustable para mantener la proporción */
+}
+
 /* Para letras responsivas */
 body {
     font-size: 1.5vw; /* El tamaño de la letra será el 1.5% del ancho de la ventana del navegador */
@@ -14,18 +19,16 @@ p {
 
 /* Estilos para pantallas pequeñas */
 @media screen and (max-width: 768px) {
-    body {
-        font-size: 1.2vw;
+    img {
+        max-width: 100%; /* Imágenes ocuparán todo el ancho disponible */
+        max-height: 300px; /* Altura máxima de la imagen en pantallas pequeñas */
     }
-
-    /* Otros estilos para pantallas pequeñas */
 }
 
 /* Estilos para pantallas medianas y grandes */
 @media screen and (min-width: 768px) {
-    body {
-        font-size: 1vw;
+    img {
+        max-width: 100%; /* Imágenes ocuparán todo el ancho disponible */
+        max-height: 300; /* Altura máxima de la imagen en pantallas pequeñas */
     }
-
-    /* Otros estilos para pantallas medianas y grandes */
 }
