@@ -12,12 +12,13 @@ mysql = MySQL(app)
 
 @app.route('/')
 def index(): 
-    print (session)
-    return render_template('index.html') 
+    if 'email' in session:
+        return render_template('index.html', email=session['email'])
+    else:
+        return render_template('sign.html') 
 
 @app.route('/sign', methods=['GET', 'POST'])
 def sign():
-    print (session)
     if request.method == 'POST':
         email = request.form['email']
         password = request.form['password']
@@ -29,7 +30,7 @@ def sign():
 
         if user:
             session['email'] = email
-            return redirect(url_for('perfil', user=email))
+            return redirect(url_for('index', user=email))
 
         else:
             error_message = "Email o contraseña incorrecta"
@@ -38,7 +39,6 @@ def sign():
 
 @app.route('/signup',  methods=['GET', 'POST'])
 def signup(): 
-    print (session)
     if request.method == 'POST':
         name = request.form.get('username')
         email = request.form.get('email')
@@ -66,16 +66,21 @@ def signup():
 
     return render_template('signup.html')  
 
+@app.route('/Signout')
+def Signout():
+    email = session.get('email')  # Obtener el valor de 'email' de la sesión
+    session.pop('email', None)    # Eliminar la clave 'email' de la sesión si está presente
+    return render_template ('sign.html')
+
 @app.route('/registro_exitoso')
 def registro_exitoso():
-    print (session)
     return render_template('registro_exitoso.html')
 
 @app.route('/page1/<user>')
-def perfil(user):
+def profile(user):
     if 'email' in session:
         email = session['email']
-        return render_template('perfil.HTML', email=email)
+        return render_template('profile.HTML', email=email)
     else:
         return redirect(url_for('sign'))
 
