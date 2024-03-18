@@ -1,13 +1,18 @@
 <!DOCTYPE html>
 
 <html lang="es">
+{% extends 'base.HTML' %}
 
 <head>
-    {% extends 'base.HTML' %}
-    <title>SignUp</title>
+    <title>{% block title %}Registro exitoso{% endblock %}</title>
+    {% block style%}
+    {% endblock %}
+    {% block javascript %}
+    {% endblock %}
 </head>
 
 <main id="main" role="main">
+
     <body>
         {% block contenido %}
         <div class="d-flex align-items-center justify-content-center vh-100">

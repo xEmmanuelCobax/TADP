@@ -11,3 +11,4 @@ const dark = () => {
     document.getElementById("lightButton").classList.remove("active");
     document.getElementById("darkButton").classList.add("active");
 }
+

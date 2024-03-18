@@ -1,12 +1,12 @@
 <!doctype html>
 <html lang="en">
 {% extends 'base.HTML' %}
-<head>
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Index</title>
-    {% block contenido_head %}
+<head>
+    <title>{% block title %}Index{% endblock %}</title>
+    {% block style%}
+    {% endblock %}
+    {% block javascript %}
     {% endblock %}
 </head>
 
@@ -42,9 +42,6 @@
             </div>
         </div>
     </section>
-    {% endblock %}
-
-    {% block javascript %}
     {% endblock %}
 </main>
 
