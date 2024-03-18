@@ -1,22 +1,111 @@
-img {
-    max-width: 100%; /* Imágenes no superarán el ancho del contenedor */
-    height: auto; /* Altura ajustable para mantener la proporción */
-}
+/* LETRAS RESPONSIVAS*/
 
-/* Para letras responsivas */
-body {
-    font-size: 1.5vw; /* El tamaño de la letra será el 1.5% del ancho de la ventana del navegador */
-}
 
-/* Otros estilos */
-h1 {
-    font-size: 2.5vw; /* Tamaño de letra más grande para títulos */
-}
-
-p {
-    font-size: 1vw; /* Tamaño de letra más pequeño para párrafos */
+/*OTROS ESTILOS*/
+.divider:after,
+.divider:before {
+content: "";
+flex: 1;
+height: 1px;
+background: #eee;
 }
 
 .icon-white {
     color: white;
 }
+
+/* ESTILO BASE DEL ELEMENTO */
+.element {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+/*IMAGENES DEL CAROUSEL*/
+@media screen and (max-width: 640px) {
+    .carousel-item img {
+        width: 100%; /* Ancho completo */
+        height: auto; /* Altura automática para mantener la proporción */
+        object-fit: cover; /* Ajustar la imagen al tamaño del contenedor */
+        max-height: 280px;
+    }
+}
+
+@media screen and (min-width: 641px) and (max-width: 960px) {
+    .carousel-item img {
+        width: 100%; 
+        height: auto; 
+        object-fit: cover; 
+        max-height: 280px;
+    }
+}
+
+@media screen and (min-width: 961px) and (max-width: 1280px) {
+    .carousel-item img {
+        width: 100%; 
+        height: auto; 
+        object-fit: cover; 
+        max-height: 386px;
+    }
+}
+
+@media screen and (min-width: 1281px) and (max-width: 1920px){
+    .carousel-item img {
+        width: 100%; 
+        height: auto; 
+        object-fit: cover; 
+        max-height: 619px;
+    }
+}
+
+@media screen and (min-width: 1921px){
+    .carousel-item img {
+        width: 100%; 
+        height: auto; 
+        object-fit: cover; 
+        max-height: 519px;
+    }
+}
+
+/*NAVBAR*/
+.navbar {
+    background-color: #4B60EB; /* Cambia el color de fondo a azul */
+}
+
+.navbar-brand {
+    color: #ffffff; /* Cambia el color del texto a blanco */
+}
+
+.navbar .nav-link {
+    color: #ffffff; /* Cambiar el color del texto a rojo */
+}
+
+.navbar .nav-item a[href="https://themes.getbootstrap.com/"] {
+    color: #ffffff; /* Cambiar el color del texto a azul para el enlace "Themes" */
+}
+
+.icon-white {
+    fill: #ffffff;
+}
+
+.navbar-nav-svg path {
+    fill: #ffffff;
+}
+
+/*OFFCANVAS*/
+.offcanvas-lg {
+    background-color: #4B60EB; /* Cambia el color de fondo */
+    color: #ffffff; /* Cambia el color del texto */
+}
+
+.offcanvas-header {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Cambia el borde inferior */
+}
+
+.offcanvas-title {
+    font-size: 1.5rem; /* Cambia el tamaño del texto del título */
+}
+
+
+
+
