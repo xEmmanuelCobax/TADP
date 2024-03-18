@@ -14,33 +14,16 @@
     {% block contenido %}
     <br>
     <section carrousel class="py-5 py-xl-6 ">
-        <div class="container mb-4 mb-md-5 mb-xl-6">
-            <div class="row justify-content-md-center">
-                <div id="carouselExample" class="carousel slide">
-                    <div class="carousel-inner">
-                        <div class="carousel-item active">
-                            <img src="{{ url_for('send_static', path='img/1327593.png') }}" alt="...">
-                        </div>
-                        <div class="carousel-item">
-                            <img src="{{ url_for('send_static', path='img/1329167.png') }}" alt="...">
-                        </div>
-                        <div class="carousel-item">
-                            <img src="{{ url_for('send_static', path='img/1329170.png') }}" alt="...">
-                        </div>
-                    </div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample"
-                        data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExample"
-                        data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
-                    </button>
+        <body>
+            <div class="d-flex align-items-center justify-content-center vh-100">
+                <div class="text-center">
+                    <img class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto"
+                        src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg3dXkzEl-KByDxr6wT93NqZWxkHkR1zSI9FNeYs-6Xkvzo0yhqWy47Yx7B-fxKtESQtc1DpKqxfKv04oDJt9ANVNnkVjYgj-UYzXX6Mz09IPesmUbq_eR8_KOJhWGLOlywzUEqbIl4g7Q/s1600/estar+bien.png"
+                        alt="Imagen de marca de verificación" width="200" height="200">
+                    <h1 class="featurette-heading fw-normal lh-1" style="font-size: 5vw;">Correct LOGIN</h1>
                 </div>
             </div>
-        </div>
+        </body>
     </section>
     {% endblock %}
 </main>

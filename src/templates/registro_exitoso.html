@@ -8,11 +8,15 @@
     {% block style%}
     {% endblock %}
     {% block javascript %}
+    <script>
+        setTimeout(function () {
+            window.location.href = "{{ url_for('index') }}";
+        }, 3000);
+    </script>
     {% endblock %}
 </head>
 
 <main id="main" role="main">
-
     <body>
         {% block contenido %}
         <div class="d-flex align-items-center justify-content-center vh-100">
@@ -24,13 +28,6 @@
                 <p class="lead" style="font-size: 2vw;"> <span class="text-align">TU REGISTRO HA SIDO EXITOSO</span></p>
             </div>
         </div>
-        {% endblock %}
-        {% block javascript %}
-        <script>
-            setTimeout(function () {
-                window.location.href = "{{ url_for('index') }}";
-            }, 3000);
-        </script>
         {% endblock %}
     </body>
 </main>
