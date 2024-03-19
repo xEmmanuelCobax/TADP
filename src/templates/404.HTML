@@ -12,9 +12,8 @@
 </head>
 
 <main id="main" role="main">
-    {% block contenido %}
-
     <body>
+        {% block contenido %}
         <div class="d-flex align-items-center justify-content-center vh-100">
             <div class="text-center">
                 <h1 class="featurette-heading fw-normal lh-1" style="font-size: 10vw;">404</h1>
@@ -26,8 +25,8 @@
                 <a href="{{ url_for('index') }}" class="btn btn-primary">Home</a>
             </div>
         </div>
+        {% endblock %}
     </body>
-    {% endblock %}
 </main>
 
 </html>
