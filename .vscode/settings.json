@@ -1,4 +1,77 @@
 {
     "python.analysis.autoImportCompletions": false,
-    "python.analysis.typeCheckingMode": "off"
+    "python.analysis.typeCheckingMode": "off",
+    "peacock.keepBadgeColor": false,
+    "peacock.favoriteColors": [
+        {
+            "name": "Angular Red",
+            "value": "#dd0531",
+            "affectedElements": [
+                "activityBar"
+            ]
+        },
+        {
+            "name": "Azure Blue",
+            "value": "#007fff",
+            "affectedElements": [
+                "statusBar"
+            ]
+        },
+        {
+            "name": "JavaScript Yellow",
+            "value": "#f9e64f",
+            "affectedElements": [
+                "titleBar"
+            ]
+        },
+        {
+            "name": "Mandalorian Blue",
+            "value": "#1857a4",
+            "affectedElements": [
+                "activityBar"
+            ]
+        },
+        {
+            "name": "Node Green",
+            "value": "#215732",
+            "affectedElements": [
+                "statusBar"
+            ]
+        },
+        {
+            "name": "React Blue",
+            "value": "#61dafb",
+            "affectedElements": [
+                "titleBar"
+            ]
+        },
+        {
+            "name": "Something Different",
+            "value": "#832561",
+            "affectedElements": [
+                "activityBar"
+            ]
+        },
+        {
+            "name": "Svelte Orange",
+            "value": "#ff3d00",
+            "affectedElements": [
+                "statusBar"
+            ]
+        },
+        {
+            "name": "Vue Green",
+            "value": "#42b883",
+            "affectedElements": [
+                "titleBar"
+            ]
+        }
+    ],
+    "peacock.affectDebuggingStatusBar": true,
+    "peacock.affectSashHover": false,
+    "peacock.elementAdjustments": {
+        "activityBar": "lighten",
+        "statusBar": "lighten",
+        "titleBar": "lighten"
+    }
 }
