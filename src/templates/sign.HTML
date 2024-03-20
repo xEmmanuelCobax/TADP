@@ -20,8 +20,9 @@
                     <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.svg"
                         class="img-fluid" alt="Phone image">
                 </div>
-                <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
-                    <p class="lead fw-normal mb-0 me-3">Sign in</p>
+                <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1 ">
+                    <hr/>
+                    <h1 class="display-4 fw-bold lh-1 text-body-emphasis mb-3">Sign In</h1>
                     <form method="post" action="{{ url_for('sign') }}">
                         {% if error_message %}
                         <div class="alert alert-danger" role="alert">
@@ -30,16 +31,19 @@
                         {% endif %}
                         <!-- Email input -->
                         <div class="form-outline mb-4">
-                            <label class="form-label" for="form1Example13">Email address</label>
-                            <input type="email" value="{{ email }}" class="form-control {% if email_not_found %}is-invalid{% endif %} " id="email" name="email" required>
+                            <label for="email">Email address</label>
+                            <input type="email" value="{{ email }}"
+                                class="form-control {% if email_not_found %}is-invalid{% endif %} " id="email"
+                                name="email" required/>
                             {% if email_not_found %}
                             <div class="invalid-feedback">Email not found.</div>
                             {% endif %}
                         </div>
                         <!-- Password input -->
                         <div class="form-outline mb-4">
-                            <label class="form-label" for="form1Example23">Password</label>
-                            <input type="password" class="form-control {% if bad_password %}is-invalid{% endif %} " id="password" name="password" required>
+                            <label for="password">Password</label>
+                            <input type="password" class="form-control {% if bad_password %}is-invalid{% endif %} "
+                                id="password" name="password" required/>
                             {% if bad_password %}
                             <div class="invalid-feedback">Invalid password.</div>
                             {% endif %}

@@ -1,17 +1,14 @@
 /* LETRAS */
 @font-face {
     font-family: 'Roboto';
-    font-style: normal;
-    font-weight: 400;
-    src: url('ruta/de/tu/fuente/roboto-regular.woff2') format('woff2'),
-        /* Cambia la ruta a tu archivo de fuente Roboto regular */
-        url('ruta/de/tu/fuente/roboto-regular.woff') format('woff');
-    /* Cambia la ruta a tu archivo de fuente Roboto regular */
+    src: url('https: //fonts.googleapis.com/css2?family=Roboto&display=swap') format('truetype');
+    /* Cambia la ruta según donde hayas colocado el archivo */
 }
 
 /* Aplicar la fuente Roboto al cuerpo del documento */
 body {
     font-family: 'Roboto', sans-serif;
+    color: #4B60EB;
 }
 
 /* Aplicar la fuente Roboto a los elementos que desees */
@@ -19,6 +16,7 @@ h1,
 h2,
 p {
     font-family: 'Roboto', sans-serif;
+    color: #4B60EB;
 }
 
 /*OTROS ESTILOS*/
@@ -132,4 +130,16 @@ p {
 .offcanvas-title {
     font-size: 1.5rem;
     /* Cambia el tamaño del texto del título */
+}
+
+/*OTROS ESTILOS*/
+.display-4 {
+    color: #4B60EB;
+    /* Color azul (puedes cambiar este valor por el color que desees) */
+    font-weight: bold;
+    /* Texto en negrita */
+    line-height: 1;
+    /* Altura de línea */
+    margin-bottom: 0.75rem;
+    /* Margen inferior */
 }
