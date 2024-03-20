@@ -84,14 +84,18 @@ def signup():
             existing_user = cur.fetchone()
 
             if existing_email:
-                error_message = "El correo electrónico ya está registrado. Por favor, utiliza otro correo electrónico."
-                return render_template("signup.html", error_message=error_message)
+                email_found = True
+                error_message = "The email is already registered."
+                return render_template(
+                    "signup.html", email_found=email_found, error_message=error_message
+                )
 
             elif existing_user:
-                error_message = (
-                    "El usuario ya existe. Por favor, elige otro correo electrónico."
+                user_found = True
+                error_message = "User already exists. Please choose another email."
+                return render_template(
+                    "signup.html", user_found=user_found, error_message=error_message
                 )
-                return render_template("signup.html", error_message=error_message)
             else:
                 cur.execute(
                     "INSERT INTO users (name,email, password) VALUES (%s, %s, %s)",
@@ -99,7 +103,7 @@ def signup():
                 )
                 mysql.connection.commit()
                 session["email"] = email
-                return redirect(url_for("registro_exitoso"))
+                return redirect(url_for("successful_registration"))
 
         return render_template("signup.html")
 
@@ -113,16 +117,41 @@ def Signout():
     return render_template("sign.html")
 
 
-@app.route("/registro_exitoso")
-def registro_exitoso():
-    return render_template("registro_exitoso.html")
+@app.route("/successful_registration")
+def successful_registration():
+    return render_template("successful_registration.html")
 
 
-@app.route("/page1/<user>")
-def profile(user):
+@app.route("/profile")
+def profile():
     if "email" in session:
         email = session["email"]
-        return render_template("profile.HTML", email=email)
+        cur = mysql.connection.cursor()
+        cur.execute("SELECT * FROM users WHERE email = %s", (email,))
+        user_data = cur.fetchone()
+        cur.close()
+        print(user_data[1])
+        print(user_data[2])
+        return render_template(
+            "profile.html", email=session["email"], user_data=user_data
+        )
+    else:
+        return redirect(url_for("sign"))
+
+
+@app.route("/settings")
+def settings():
+    if "email" in session:
+        email = session["email"]
+        cur = mysql.connection.cursor()
+        cur.execute("SELECT * FROM users WHERE email = %s", (email,))
+        user_data = cur.fetchone()
+        cur.close()
+        print(user_data[1])
+        print(user_data[2])
+        return render_template(
+            "settings.html", email=session["email"], user_data=user_data
+        )
     else:
         return redirect(url_for("sign"))
 
