@@ -9,6 +9,21 @@
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
     {% endblock %}
     {% block javascript %}
+    <script>
+        const Account = () => {
+            document.getElementById("account_tablist").classList.add("active","show");
+            document.getElementById("password_tablist").classList.remove("active", "show");
+            document.getElementById("account").classList.add("active", "show");
+            document.getElementById("password").classList.remove("active", "show");
+        }
+
+        const Password = () => {
+            document.getElementById("account_tablist").classList.remove("active", "show");
+            document.getElementById("password_tablist").classList.add("active", "show");
+            document.getElementById("account").classList.remove("active", "show");
+            document.getElementById("password").classList.add("active", "show");
+        }
+    </script>
     {% endblock %}
 </head>
 
@@ -27,12 +42,12 @@
                             </div>
 
                             <div class="list-group list-group-flush" role="tablist">
-                                <a class="list-group-item list-group-item-action active" data-toggle="list"
-                                    href="#account" role="tab">
+                                <a class="list-group-item list-group-item-action active show" data-toggle="list"
+                                    href="#account" role="tab" id="account_tablist" onclick="Account()">
                                     Account
                                 </a>
                                 <a class="list-group-item list-group-item-action" data-toggle="list" href="#password"
-                                    role="tab">
+                                    role="tab" id="password_tablist" onclick="Password()">
                                     Password
                                 </a>
                                 <a class="list-group-item list-group-item-action" data-toggle="list" href="#"
@@ -65,8 +80,8 @@
 
                     <div class="col-md-7 col-xl-8">
                         <div class="tab-content">
+                            <!-- account pane -->
                             <div class="tab-pane fade show active" id="account" role="tabpanel">
-
                                 <div class="card">
                                     <div class="card-header">
                                         <div class="card-actions float-right">
@@ -108,8 +123,9 @@
                                                 </div>
                                                 <div class="col-md-4">
                                                     <div class="text-center">
-                                                        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp" alt="avatar"
-                                                            class="rounded-circle img-fluid" style="width: 150px;">
+                                                        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"
+                                                            alt="avatar" class="rounded-circle img-fluid"
+                                                            style="width: 150px;">
                                                         <div class="mt-2">
                                                             <span class="btn btn-primary"><i
                                                                     class="fa fa-upload"></i></span>
@@ -204,6 +220,7 @@
                                 </div>
 
                             </div>
+                            <!-- password pane -->
                             <div class="tab-pane fade" id="password" role="tabpanel">
                                 <div class="card">
                                     <div class="card-body">
