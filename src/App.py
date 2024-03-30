@@ -39,30 +39,26 @@ def sign():
             cur = mysql.connection.cursor()
             cur.execute("SELECT * FROM users WHERE email = %s", (email,))
             existing_email = cur.fetchone()
+            cur.close()
+            print(existing_email)
 
             if not existing_email:
                 # El correo electrónico no está registrado
                 email_not_found = True
                 return render_template("sign.html", email_not_found=email_not_found)
-
-            cur.execute(
-                "SELECT * FROM users WHERE email = %s AND password = %s",
-                (email, password),
-            )
-
-            user = cur.fetchone()
-            cur.close()
-
-            if user:
-                # Contraseña correcta
-                session["email"] = email
-                return redirect(url_for("index", user=email))
             else:
-                # Contraseña incorrecta
-                bad_password = True
-                return render_template(
-                    "sign.html", bad_password=bad_password, email=email
-                )
+                # El correo electrónico está registrado
+
+                if existing_email[3] == password:
+                    # Contraseña correcta
+                    session["email"] = email
+                    return redirect(url_for("index", user=email))
+                else:
+                    # Contraseña incorrecta
+                    bad_password = True
+                    return render_template(
+                        "sign.html", bad_password=bad_password, email=email
+                    )
         return render_template("sign.html")
 
 
