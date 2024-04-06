@@ -4,6 +4,7 @@ from flask import (
     request,
     redirect,
     url_for,
+    flash,
     send_from_directory,
     session,
 )
@@ -99,23 +100,32 @@ def signup():
                 )
                 mysql.connection.commit()
                 session["email"] = email
-                return redirect(url_for("successful_registration"))
+                return redirect(
+                    url_for("successful_registration", registration_successful=True)
+                )
 
         return render_template("signup.html")
 
 
 @app.route("/Signout")
 def Signout():
-    email = session.get("email")  # Obtener el valor de 'email' de la sesión
-    session.pop(
-        "email", None
-    )  # Eliminar la clave 'email' de la sesión si está presente
-    return render_template("sign.html")
+    if "email" in session:
+        email = session.get("email")  # Obtener el valor de 'email' de la sesión
+        session.pop(
+            "email", None
+        )  # Eliminar la clave 'email' de la sesión si está presente
+        return render_template("sign.html")
+    else:
+        return redirect(url_for("sign"))
 
 
 @app.route("/successful_registration")
 def successful_registration():
-    return render_template("successful_registration.html")
+    registration_successful = request.args.get("registration_successful")
+    if registration_successful == "True":
+        return render_template("successful_registration.html")
+    else:
+        return index()
 
 
 @app.route("/profile")
@@ -135,34 +145,189 @@ def profile():
         return redirect(url_for("sign"))
 
 
-@app.route("/settings")
-def settings():
+@app.route("/settings/account")
+def account():
     if "email" in session:
         email = session["email"]
         cur = mysql.connection.cursor()
         cur.execute("SELECT * FROM users WHERE email = %s", (email,))
         user_data = cur.fetchone()
         cur.close()
-        print(user_data[1])
-        print(user_data[2])
+        print(user_data[1])  # USERNAME
+        print(user_data[2])  # EMAIL
+        print(user_data[3])  # PASSWORD
         return render_template(
-            "settings.html", email=session["email"], user_data=user_data
+            "account.html", email=session["email"], user_data=user_data
         )
     else:
         return redirect(url_for("sign"))
 
 
-@app.route("/buscar", methods=["GET"])
-def buscar():
-    query = request.args.get("query")  # Obtener la consulta de búsqueda de la URL
-    if query == "index":
-        return redirect(url_for("index"))  # Redirigir a la página 'Index'
-    elif query == "signup":
-        return redirect(url_for("signup"))  # Redirigir a la página 'signup'
-    elif query == "sign":
-        return redirect(url_for("signup"))  # Redirigir a la página 'Habilsignupidades'
+@app.route("/settings/security")
+def security():
+    if "email" in session:
+        email = session["email"]
+        cur = mysql.connection.cursor()
+        cur.execute("SELECT * FROM users WHERE email = %s", (email,))
+        user_data = cur.fetchone()
+        cur.close()
+        return render_template(
+            "security.html", email=session["email"], user_data=user_data
+        )
     else:
-        return render_template("404.html", query=query)  # Página no encontrada 404
+        return redirect(url_for("sign"))
+
+
+@app.route("/settings/deleteaccount")
+def deleteaccount():
+    if "email" in session:
+        email = session["email"]
+        cur = mysql.connection.cursor()
+        cur.execute("SELECT * FROM users WHERE email = %s", (email,))
+        user_data = cur.fetchone()
+        cur.close()
+        return render_template(
+            "deleteaccount.html", email=session["email"], user_data=user_data
+        )
+    else:
+        return redirect(url_for("sign"))
+
+
+@app.route("/settings/ChangePassword", methods=["POST"])
+def ChangePassword():
+    if "email" in session and request.method == "POST":
+        email = session["email"]
+        cur = mysql.connection.cursor()
+        cur.execute("SELECT * FROM users WHERE email = %s", (email,))
+        user_data = cur.fetchone()
+
+        password = request.form.get("inputPasswordCurrent")
+        new_password = request.form.get("inputPasswordNew")
+        new_password2 = request.form.get("inputPasswordNew2")
+
+        if (
+            user_data
+            and user_data[3] == password
+            and new_password == new_password2
+            and new_password
+        ):
+            cur.execute(
+                "UPDATE users SET password = %s WHERE email = %s",
+                (new_password, email),
+            )
+            mysql.connection.commit()
+            cur.close()
+            ChangedPassword = True
+            return render_template("Change.HTML", ChangedPassword=ChangedPassword)
+        elif user_data[3] != password:
+            user_data = (user_data,)
+            IncorrectPassword = True
+            error_message = "The password is incorrect"
+            return render_template(
+                "security.html",
+                email=session["email"],
+                user_data=user_data,
+                IncorrectPassword=IncorrectPassword,
+                error_message=error_message,
+            )
+        elif not new_password:
+            PasswordNone = True
+            error_message = "The new password box is empty."
+            return render_template(
+                "security.html",
+                email=session["email"],
+                user_data=user_data,
+                PasswordNone=PasswordNone,
+                error_message=error_message,
+            )
+        else:
+            IncorrectConfirmation = True
+            error_message = "The confirmation is incorrect, please try again"
+            return render_template(
+                "security.html",
+                email=session["email"],
+                user_data=user_data,
+                IncorrectConfirmation=IncorrectConfirmation,
+                error_message=error_message,
+            )
+    else:
+        return redirect(url_for("sign"))
+
+
+@app.route("/settings/ChangeEmail", methods=["POST"])
+def ChangeEmail():
+    if "email" in session and request.method == "POST":
+        email = session["email"]
+        newemail = request.form.get("email")
+
+        cur = mysql.connection.cursor()
+        cur.execute("SELECT * FROM users WHERE email = %s", (email,))
+        user_data = cur.fetchone()
+
+        cur.execute("SELECT * FROM users WHERE email = %s", (newemail,))
+        existing_email = cur.fetchone()
+        cur.close()
+
+        print(existing_email)
+        if existing_email:
+            email_found = True
+            error_message = "The email is already registered."
+            return render_template(
+                "security.html",
+                email=session["email"],
+                user_data=user_data,
+                email_found=email_found,
+                error_message=error_message,
+            )
+        else:
+            cur = mysql.connection.cursor()
+            cur.execute(
+                "UPDATE users SET email = %s WHERE email = %s",
+                (newemail, email),
+            )
+            mysql.connection.commit()
+            cur.close()
+            session["email"] = newemail
+            ChangedEmail = True
+            return render_template("Change.HTML", ChangedEmail=ChangedEmail)
+    return redirect(url_for("sign"))
+
+
+@app.route("/settings/ChangeProfile", methods=["POST"])
+def ChangeProfile():
+    if "email" in session and request.method == "POST":
+        email = session["email"]
+        cur = mysql.connection.cursor()
+        new_name = request.form.get("inputUsername")
+        new_phone = request.form.get("inputPhone")
+        print(new_name)
+        print(new_phone)
+        cur.execute(
+        "UPDATE users SET name = %s, phone = %s WHERE email = %s",
+        (new_name, new_phone, email),
+        )
+        mysql.connection.commit()
+        cur.close()
+        ChangedProfile = True
+        return render_template("Change.HTML", ChangedProfile=ChangedProfile)
+    else:
+        return redirect(url_for("sign"))
+
+@app.route("/Delete_Account")
+def Delete_Account():
+    if "email" in session:
+        email = session.get("email")  # Obtener el valor de 'email' de la sesión
+        # Conectarse a la base de datos y eliminar al usuario
+        cur = mysql.connection.cursor()
+        cur.execute("DELETE FROM users WHERE email = %s", (email,))
+        mysql.connection.commit()
+        cur.close()
+        session.pop(
+            "email", None
+        )  # Eliminar la clave 'email' de la sesión si está presente
+        return render_template("sign.html")
+    else:
+        return redirect(url_for("sign"))
 
 
 @app.route("/static/<path:path>")

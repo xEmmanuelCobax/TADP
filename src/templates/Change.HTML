@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+
+<html lang="es">
+{% extends 'base.HTML' %}
+
+<head>
+    <title>{% block title %}successful registration{% endblock %}</title>
+    {% block style%}
+    {% endblock %}
+    {% block javascript %}
+    <script>
+        setTimeout(function () {
+            window.location.href = "{{ url_for('index') }}";
+        }, 3000);
+    </script>
+    {% endblock %}
+</head>
+
+<main id="main" role="main">
+
+    <body>
+        {% block contenido %}
+        <div class="d-flex align-items-center justify-content-center vh-100">
+            <div class="text-center">
+                <img class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto"
+                    src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg3dXkzEl-KByDxr6wT93NqZWxkHkR1zSI9FNeYs-6Xkvzo0yhqWy47Yx7B-fxKtESQtc1DpKqxfKv04oDJt9ANVNnkVjYgj-UYzXX6Mz09IPesmUbq_eR8_KOJhWGLOlywzUEqbIl4g7Q/s1600/estar+bien.png"
+                    alt="check" width="200" height="200">
+                <h1 class="featurette-heading fw-normal lh-1" style="font-size: 5vw;">THANK YOU SO MUCH!</h1>
+                <p class="lead" style="font-size: 2vw;">
+                    <span class="text-align">
+                        {% if ChangedPassword %}
+                        The password has been changed
+                        {% endif %}
+                        {% if ChangedEmail %}
+                        The email has been changed
+                        {% endif %}
+                        {% if ChangedProfile %}
+                        The name has been changed
+                        {% endif %}
+                    </span>
+                </p>
+
+            </div>
+        </div>
+        {% endblock %}
+    </body>
+</main>
+
+</html>

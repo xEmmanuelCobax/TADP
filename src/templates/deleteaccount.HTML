@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+
+<html lang="es">
+
+{% extends 'base.HTML' %}
+
+<head>
+    <title>{% block title %}Settings{% endblock %}</title>
+    {% block style%}
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+    {% endblock %}
+    <style>
+        .dialog {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 400px;
+            /* Ancho del diálogo */
+            height: 200px;
+            /* Alto del diálogo */
+            background-color: white;
+            border: 1px solid #ccc;
+            padding: 20px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+        }
+    </style>
+    {% block javascript %}
+    <script>
+        function redirectToAccount() {
+            // Obtener la URL generada por Flask utilizando url_for
+            var securityUrl = "{{ url_for('account') }}";
+            // Redirigir a la URL de seguridad
+            window.location.href = securityUrl;
+        }
+        function redirectToSecurity() {
+            // Obtener la URL generada por Flask utilizando url_for
+            var securityUrl = "{{ url_for('security') }}";
+            // Redirigir a la URL de seguridad
+            window.location.href = securityUrl;
+        }
+        function redirectToDeleteAccount() {
+            // Obtener la URL generada por Flask utilizando url_for
+            var securityUrl = "{{ url_for('deleteaccount') }}";
+            // Redirigir a la URL de seguridad
+            window.location.href = securityUrl;
+        }
+    </script>
+    {% endblock %}
+</head>
+
+<main id="main" role="main">
+    {% block contenido %}
+    <section class="pb-4">
+        <div class="container py-5 h-100">
+            <div class="row d-flex align-items-center justify-content-center mt-5">
+                <h1 class="h3 mb-3">Settings</h1>
+                <div class="row">
+                    <div class="col-md-5 col-xl-4">
+
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="card-title mb-0">Profile Settings</h5>
+                            </div>
+
+                            <div class="list-group list-group-flush" role="tablist">
+                                <a class="list-group-item list-group-item-action" data-toggle="list" role="tab"
+                                    id="account_tablist" onclick="redirectToAccount() ">
+                                    Account
+                                </a>
+                                <a class="list-group-item list-group-item-action" data-toggle="list" role="tab"
+                                    id="security_tablist" onclick="redirectToSecurity() ">
+                                    Security
+                                </a>
+                                <a class="list-group-item list-group-item-action active show" data-toggle="list"
+                                    role="tab" id="deleteaccount_tablist" onclick="redirectToDeleteAccount() ">
+                                    Delete account
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-7 col-xl-8">
+                        <div class="tab-content">
+                            <!-- delete account pane -->
+                            <div class="tab-pane fade show active" id="deleteaccount" role="tabpanel">
+                                <div class="card">
+
+                                    <div class="card-header">
+                                        <h3 class="mb-0">Delete Account</h3>
+                                        <p class="mb-0">
+                                            Delete or Close your account permanently.
+                                        </p>
+                                    </div>
+
+                                    <div class="card-body">
+                                        <div class="card-body p-4">
+                                            <span class="text-danger h4">Warning</span>
+                                            <p style="color: black;">
+                                                If you delete your account, you will be removed from the database.
+                                            </p>
+                                            <button type="submit" class="btn btn-danger" id="openModalBtn"
+                                                onclick="window.modal1.showModal();">Delete Account</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <dialog class="custom-dialog" id="modal1">
+                                <div style="text-align: center;"><svg class="navbar-nav-svg" viewBox="0 0 512 499.36"
+                                        role="img" width="50" height="50">
+                                        <title>Twitter</title>
+                                        <use xlink:href="#exclamation" class="icon-danger" />
+                                    </svg></div>
+                                <h3 style="text-align: center;">Are you sure?</h3>
+                                <p style="color: grey; text-align: center;">You won´t be able to revert this!</p>
+                                <div style="text-align: center;">
+                                    <a class="btn btn-danger" onclick="window.modal1.close();"
+                                        href="/Delete_Account">Yes,Delete</a>
+                                    <button class="btn btn-success" onclick="window.modal1.close();">Cancel</button>
+                                </div>
+                            </dialog>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {% endblock %}
+</main>
+
+</html>
