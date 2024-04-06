@@ -144,17 +144,6 @@ p {
     /* Margen inferior */
 }
 
-.custom-dialog {
-    width: 400px;
-        /* Ancho del diálogo */
-        height: 250px;
-        /* Altura del diálogo */
-    border: 5px solid rgba(255, 255, 255, 0.1);
-    /* Cambiar el color del borde del diálogo */
-    border-radius: 10px;
-        /* Hacer que el borde sea redondeado */
-}
-
-.icon-danger {
-    fill: red;
+.invisible-hr {
+    visibility: hidden;
 }
