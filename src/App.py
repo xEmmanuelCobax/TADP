@@ -16,7 +16,6 @@ app.config["MYSQL_USER"] = config.MYSQL_USER
 app.config["MYSQL_DB"] = config.MYSQL_DB
 app.config["MYSQL_PASSWORD"] = config.MYSQL_PASSWORD
 app.config["SECRET_KEY"] = config.HEX_SEC_KEY  # Configurar la clave secreta
-
 mysql = MySQL(app)
 
 
@@ -25,7 +24,7 @@ def index():
     if "email" in session:
         return render_template("index.html", email=session["email"])
     else:
-        return render_template("sign.html")
+        return render_template("index.html")
 
 
 @app.route("/sign", methods=["GET", "POST"])
@@ -94,11 +93,12 @@ def signup():
                     "signup.html", user_found=user_found, error_message=error_message
                 )
             else:
-                cur.execute(
+                # registrar en base de datos
+                cur.execute( 
                     "INSERT INTO users (name,email, password) VALUES (%s, %s, %s)",
                     (name, email, password),
                 )
-                mysql.connection.commit()
+                mysql.connection.commit() 
                 session["email"] = email
                 return redirect(
                     url_for("successful_registration", registration_successful=True)
@@ -293,25 +293,53 @@ def ChangeEmail():
     return redirect(url_for("sign"))
 
 
+from flask import flash
+
+
 @app.route("/settings/ChangeProfile", methods=["POST"])
 def ChangeProfile():
     if "email" in session and request.method == "POST":
         email = session["email"]
-        cur = mysql.connection.cursor()
         new_name = request.form.get("inputUsername")
         new_phone = request.form.get("inputPhone")
-        print(new_name)
-        print(new_phone)
+        if not new_name:
+            new_name = 0
+
+        cur = mysql.connection.cursor()
+        # Encontrar los datos del usuario en la base de datos
+        cur.execute("SELECT * FROM users WHERE email = %s", (email,))
+        user_data = cur.fetchone()
+
+        # Verificar si el nuevo nombre ya existe en la base de datos
         cur.execute(
-        "UPDATE users SET name = %s, phone = %s WHERE email = %s",
-        (new_name, new_phone, email),
+            "SELECT * FROM users WHERE name = %s AND email != %s", (new_name, email)
         )
-        mysql.connection.commit()
-        cur.close()
-        ChangedProfile = True
-        return render_template("Change.HTML", ChangedProfile=ChangedProfile)
+        existing_user = cur.fetchone()
+
+        if existing_user:
+            user_found = True
+            error_message = "User already exists. Please choose another email."
+            return render_template(
+                "account.html",
+                email=session["email"],
+                user_data=user_data,
+                user_found=user_found,
+                error_message=error_message,
+                new_name=new_name,
+            )  # Redirigir a la página de configuración
+        else:
+            # Actualizar el perfil si no se encuentra otro usuario con el mismo nombre
+            cur.execute(
+                "UPDATE users SET name = %s, phone = %s WHERE email = %s",
+                (new_name, new_phone, email),
+            )
+            mysql.connection.commit()
+            cur.close()
+            ChangedProfile = True
+            return render_template("Change.HTML", ChangedProfile=ChangedProfile)
     else:
         return redirect(url_for("sign"))
+
 
 @app.route("/Delete_Account")
 def Delete_Account():
@@ -336,4 +364,4 @@ def send_static(path):
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, port=9000)

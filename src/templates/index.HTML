@@ -1,48 +1,67 @@
-<!doctype html>
-<html lang="en">
 {% extends 'base.HTML' %}
 
-<head>
-    <title>{% block title %}Index{% endblock %}</title>
-    {% block style%}
-    {% endblock %}
-    {% block javascript %}
-    {% endblock %}
-</head>
+{% block style%}
 
-<main id="main" role="main">
-    {% block contenido %}
-    <br>
-    <section carrousel class="py-5 py-xl-6 ">
-        <div class="container mb-4 mb-md-5 mb-xl-6">
-            <div class="row justify-content-md-center">
-                <div id="carouselExample" class="carousel slide">
-                    <div class="carousel-inner">
-                        <div class="carousel-item active">
-                            <img src="{{ url_for('send_static', path='img/1327593.png') }}" alt="Wallpaper1">
-                        </div>
-                        <div class="carousel-item">
-                            <img src="{{ url_for('send_static', path='img/1329167.png') }}" alt="Wallpaper2">
-                        </div>
-                        <div class="carousel-item">
-                            <img src="{{ url_for('send_static', path='img/1329170.png') }}" alt="Wallpaper3">
-                        </div>
+<style>
+    .navbar {
+        background-color: transparent !important;
+    }
+</style>
+
+{% endblock %}
+
+{% block title %}Index{% endblock %}
+
+{% block index %}
+
+<!--Hero -->
+<section class="hero">
+    <div class="hero__contenedor"> <!--flex-->
+        <figure class="hero__imagen__contenedor">
+            <!-- <img class="hero__imagen__flores" src="" alt="Foto hero"> -->
+        </figure>
+        <div class="hero__textos">
+            <h1 class="hero__title">Este es nuestro Proyecto ❤️</h1>
+            <h1 class="hero__name1">Emmanuel Coba Cuevas</h1>
+            <h1 class="hero__name2">Valencia Hernández Carlos</h1>
+            {% if not email %}
+            <a href="/signup" rel="noopener noreferrer">
+                <button type="button" class="btn btn-primary hero__btn">Registrate
+                    <i class="bi bi-arrow-right-circle-fill"></i>
+                </button>
+            </a>
+            {% endif %}
+        </div>
+    </div>
+</section>
+<!-- 
+<section carrusel class="carrusel">
+    <div class="container__carrusel">
+        <div class="row justify-content-md-center">
+            <div id="carouselExample" class="carousel slide">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="{{ url_for('send_static', path='img/1327593.png') }}" alt="Wallpaper1" class="imagen__carrusel">
                     </div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample"
-                        data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExample"
-                        data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
-                    </button>
+                    <div class="carousel-item">
+                        <img src="{{ url_for('send_static', path='img/1329167.png') }}" alt="Wallpaper2" class="imagen__carrusel">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="{{ url_for('send_static', path='img/1329170.png') }}" alt="Wallpaper3" class="imagen__carrusel">
+                    </div>
                 </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample"
+                    data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExample"
+                    data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
             </div>
         </div>
-    </section>
-    {% endblock %}
-</main>
-
-</html>
+    </div>
+</section> -->
+{% endblock %}

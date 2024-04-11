@@ -1,83 +1,91 @@
-<!DOCTYPE html>
-
-<html lang="es">
 {% extends 'base.HTML' %}
 
-<head>
-    <title>{% block title %}Sign in{% endblock %}</title>
-    {% block style%}
-    {% endblock %}
-    {% block javascript %}
-    {% endblock %}
-</head>
+{% block title %}Sign in{% endblock %}
 
-<main id="main" role="main">
-    {% block contenido %}
-    <!-- loggin session -->
-    <section class="vh-100">
-        <div class="container py-5 h-100">
-            <div class="row d-flex align-items-center justify-content-center h-100">
-                <hr class="invisible-hr">
-                <div class="col-md-8 col-lg-7 col-xl-6">
-                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.svg"
-                        class="img-fluid" alt="Phone image">
-                </div>
-                <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1 ">
-                    <hr class="invisible-hr">
-                    <h1 class="display-4 fw-bold mb-3">Sign In</h1>
-                    <form method="post" action="{{ url_for('sign') }}">
-                        <!-- Email input -->
-                        <div class="form-outline mb-4">
-                            <label for="email">Email address</label>
-                            <input type="email" value="{{ email }}"
-                                class="form-control {% if email_not_found %}is-invalid{% endif %} " id="email"
-                                name="email" required/>
-                            {% if email_not_found %}
-                            <div class="invalid-feedback">Email not found.</div>
-                            {% endif %}
-                        </div>
-                        <!-- Password input -->
-                        <div class="form-outline mb-4">
-                            <label for="password">Password</label>
-                            <input type="password" class="form-control {% if bad_password %}is-invalid{% endif %} "
-                                id="password" name="password" required/>
-                            {% if bad_password %}
-                            <div class="invalid-feedback">Invalid password.</div>
-                            {% endif %}
-                        </div>
-                        <div class="d-flex justify-content-around align-items-center mb-4">
-                            <!-- Checkbox -->
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="form1Example3" checked />
-                                <label class="form-check-label" for="form1Example3"> Remember me </label>
-                            </div>
-                            <a href="#!">Forgot password?</a>
-                        </div>
+{% block style%}
+<style>
+    .navbar{
+        background-image: linear-gradient(to right, #000000, #000000, #c7af9d);
+    }
+</style>
+{% endblock %}
 
-                        <!-- Submit button -->
-                        <button type="submit" class="btn btn-primary btn-lg btn-block">Sign in</button>
+{% block contenido %}
+<!-- loggin session -->
+<section class="">
 
-                        <!-- divider -->
-                        <div class="divider d-flex align-items-center my-4">
-                            <p class="text-center fw-bold mx-3 mb-0 text-muted">OR</p>
-                        </div>
+    <div class=" container__signin">
 
-                        <!-- other methods -->
-                        <a class="btn btn-primary btn-lg btn-block" style="background-color: #3b5998" href="#!"
-                            role="button">
-                            <i class="fab fa-facebook-f me-2"></i>Continue with Facebook
-                        </a>
-                        <a class="btn btn-primary btn-lg btn-block" style="background-color: #55acee" href="#!"
-                            role="button">
-                            <i class="fab fa-twitter me-2"></i>Continue with Twitter</a>
+        <div class="container__signin__flex ">
 
-                    </form>
+            <div class="col-md-8 col-lg-7 col-xl-6 container__imagen__signin">
+                <img src="../static/img/Apple-like Aesthetics - 4.jpg" class="img-fluid imagen__signin" alt="Phone image">
+                <div class="informacion">
+                    <!-- <p class="informacion__mensaje">*Create your Specify account with your work email to sync 
+                        all your design data across your design system</p>  -->
+                
+                    <a class="informacion__mensaje" href="/signup">¿No tienes una cuenta?</a>
                 </div>
             </div>
+
+            <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1 container__sigin__titulos">
+                <h1 class=" fw-bold mb-3 signin__titulo ">Inicia Sesion</h1>
+                <form method="post" action="{{ url_for('sign') }}">
+                    <!-- Email input -->
+                    <div class="form-outline mb-4">
+                        <label for="email">Email address</label>
+                        <input type="email" value="{{ email }}"
+                            class="form-control {% if email_not_found %}is-invalid{% endif %} " id="email" name="email"
+                            required />
+                        {% if email_not_found %}
+                        <div class="invalid-feedback">Email not found.</div>
+                        {% endif %}
+                    </div>
+                    <!-- Password input -->
+                    <div class="form-outline mb-4">
+                        <label for="password">Password</label>
+                        <input type="password" class=" form-control {% if bad_password %}is-invalid{% endif %} "
+                            id="password" name="password" required />
+                        {% if bad_password %}
+                        <div class="invalid-feedback">Invalid password.</div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="d-flex align-items-center mb-4 sigin__remember">
+                        <!-- Checkbox -->
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="form1Example3" checked />
+                            <label class="form-check-label" for="form1Example3"> Remember me </label>
+                        </div>
+                        <a href="#!" class="forget">Forgot password?</a>
+                    </div>
+
+                    <!-- Submit button -->
+                    <button type="submit" class="btn__form btn btn-primary btn-lg btn-block">Sign in</button>
+
+                    <!-- divider -->
+                    <div class="divider d-flex align-items-center my-4">
+                        <p class="text-center fw-bold mx-3 mb-0 divisor">OR</p>
+                    </div>
+
+                    <!-- other methods -->
+                    <div class="sigin__metodos">
+                        <a class="btn_facebook btn btn-primary btn-lg btn-block" style="background-color: #3b5998"
+                            href="#!" role="button">
+                            <i class="fab fa-facebook-f me-2"></i>Continue with Facebook
+                        </a>
+                        <a class="btn_twitter btn btn-primary btn-lg btn-block" style="background-color: #55acee"
+                            href="#!" role="button">
+                            <i class="fab fa-twitter me-2"></i>Continue with Twitter</a>
+                    </div>
+
+                </form>
+            </div>
         </div>
-    </section>
-    {% endblock %}
-</main>
+    </div>
+    
+
+</section>
 
 
-</html>
+{% endblock %}

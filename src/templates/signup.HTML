@@ -1,77 +1,86 @@
-<!DOCTYPE html>
-
-<html lang="es">
 {% extends 'base.HTML' %}
 
-<head>
-    <title>{% block title %}Sign Up{% endblock %}</title>
-    {% block style%}
-    {% endblock %}
-    {% block javascript %}
-    {% endblock %}
-</head>
+{% block title %}Sign Up{% endblock %}
 
-<main id="main" role="main">
-    {% block contenido %}
-    <!-- register a new account -->
-    <section class="vh-100">
-        <div class="container py-5 h-100">
-            <div class="row d-flex align-items-center justify-content-center h-100">
-                <hr class="invisible-hr">
-                <div class="col-md-8 col-lg-7 col-xl-6">
-                    <img src="{{ url_for('send_static', path='img/signup.png') }}" class="img-fluid" alt="Register image">
-                </div>
-                <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1 ">
-                    <hr class="invisible-hr">
-                    <h1 class="display-4 fw-bold mb-3">Sign Up</h1>
-                    <form method="post" action="{{ url_for('signup') }}">
-                        <!-- Username input -->
-                        <div class="form-outline mb-4">
-                            <label for="Username">Username</label>
-                            <input type="Username" class="form-control {% if user_found %}is-invalid{% endif %} "
-                                id="username" name="username" required />
-                            {% if user_found %}
-                            <div class="invalid-feedback">{{ error_message }}</div>
-                            {% endif %}
-                        </div>
-                        <!-- Email input -->
-                        <div class="form-outline mb-4">
-                            <label for="email">Email address</label>
-                            <input type="email" class="form-control {% if email_found %}is-invalid{% endif %} "
-                                id="email" name="email" required />
-                            {% if email_found %}
-                            <div class="invalid-feedback">{{ error_message }}</div>
-                            {% endif %}
-                        </div>
-                        <!-- Password input -->
-                        <div class="form-outline mb-4">
-                            <label for="password">Password</label>
-                            <input type="password" class="form-control" id="password" name="password" required />
-                        </div>
+{% block style%}
+<style>
+    .navbar {
+        background-image: linear-gradient(to right, #000000, #000000, #c7af9d);
+    }
+</style>
+{% endblock %}
 
-                        <!-- Submit button -->
-                        <button type="submit" class="btn btn-primary btn-lg btn-block">Sign up</button>
 
-                        <!-- divider -->
-                        <div class="divider d-flex align-items-center my-4">
-                            <p class="text-center fw-bold mx-3 mb-0 text-muted">OR</p>
-                        </div>
-                        
-                        <!-- other methods -->
-                        <a class="btn btn-primary btn-lg btn-block" style="background-color: #3b5998" href="#!"
-                            role="button">
+
+{% block contenido %}
+<!-- register a new account -->
+<section class="">
+
+    <div class="container__singup">
+
+        <div class="container__singup__flex">
+            <!--imagen-->
+            <div class="col-md-8 col-lg-7 col-xl-6 container__imagen__singup">
+                <img src="../static/img/Apple-like Aesthetics - 4.jpg" class="img-fluid imagen__signup"
+                    alt="Register image">
+            </div>
+
+            <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1  container__singup__titulos">
+                <h1 class="fw-bold mb-3 singup__titulo">Resgistrate</h1>
+                <form method="post" action="{{ url_for('signup') }}">
+                    <!-- Username input -->
+                    <div class="form-outline mb-4">
+                        <label for="Username">Username</label>
+                        <input type="Username" class="form-control {% if user_found %}is-invalid{% endif %} "
+                            id="username" name="username" required />
+                        {% if user_found %}
+                        <div class="invalid-feedback">{{ error_message }}</div>
+                        {% endif %}
+                    </div>
+                    <!-- Email input -->
+                    <div class="form-outline mb-4">
+                        <label for="email">Email address</label>
+                        <input type="email" class="form-control {% if email_found %}is-invalid{% endif %} " id="email"
+                            name="email" required />
+                        {% if email_found %}
+                        <div class="invalid-feedback">{{ error_message }}</div>
+                        {% endif %}
+                    </div>
+                    <!-- Password input -->
+                    <div class="form-outline mb-4">
+                        <label for="password">Password</label>
+                        <input type="password" class="singup__password form-control" id="password" name="password" required />
+                    </div>
+
+                    <!-- Submit button -->
+                    <button type="submit" class="btn__form btn btn-primary btn-lg btn-block">Sign up</button>
+
+                    <!-- divider -->
+                    <div class="divider d-flex align-items-center my-4">
+                        <p class="text-center fw-bold mx-3 mb-0 divisor">OR</p>
+                    </div>
+
+                    <!-- other methods -->
+                    <div class="singup__metodos">
+                        <a class="btn_facebook  btn btn-primary btn-lg btn-block" style="background-color: #3b5998"
+                            href="#!" role="button">
                             <i class="fab fa-facebook-f me-2"></i>Continue with Facebook
                         </a>
-                        <a class="btn btn-primary btn-lg btn-block" style="background-color: #55acee" href="#!"
+                        <a class="btn_twitter btn btn-primary btn-lg btn-block" style="background-color: #55acee" href="#!"
                             role="button">
                             <i class="fab fa-twitter me-2"></i>Continue with Twitter</a>
+                    </div>
 
-                    </form>
-                </div>
+                </form>
             </div>
         </div>
-    </section>
-    {% endblock %}
-</main>
+    </div>
+</section>
 
-</html>
+<div class="informacion">
+    <!-- <p class="informacion__mensaje">*Create your Specify account with your work email to sync 
+    all your design data across your design system</p>  -->
+
+    <a class="informacion__mensaje" href="/sign">¿Ya tienes una cuenta?</a>
+</div>
+{% endblock %}

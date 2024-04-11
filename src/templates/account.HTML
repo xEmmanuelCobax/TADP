@@ -114,14 +114,21 @@
                                                 <div class="col-md-8">
                                                     <div class="form-group">
                                                         <label for="inputUsername">Username</label>
-                                                        <input type="text" class="form-control" id="inputUsername"
-                                                            name="inputUsername" placeholder="Username"
-                                                            value="{{ user_data[1] }}" required>
+                                                        <input type="text"
+                                                            class="form-control {% if user_found %}is-invalid{% endif %}"
+                                                            id="inputUsername" name="inputUsername"
+                                                            placeholder="Username"
+                                                            value="{% if not user_found %}{{ user_data[1] }}{% else %}{{ new_name }}{% endif %}"
+                                                            required>
+                                                        {% if user_found %}
+                                                        <div class="invalid-feedback">{{ error_message }}</div>
+                                                        {% endif %}
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="phone">Phone</label>
                                                         <input type="tel" class="form-control" id="inputPhone"
-                                                            name="inputPhone" pattern="[0-9]{10}" placeholder="inputphone">
+                                                            name="inputPhone" pattern="[0-9]{10}"
+                                                            placeholder="inputphone">
                                                     </div>
                                                 </div>
                                             </div>

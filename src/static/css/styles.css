@@ -1,23 +1,483 @@
 /* LETRAS */
-@font-face {
-    font-family: 'Roboto';
-    src: url('https: //fonts.googleapis.com/css2?family=Roboto&display=swap') format('truetype');
-    /* Cambia la ruta según donde hayas colocado el archivo */
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+    /*outline: 1px solid red;*/
 }
+
 
 /* Aplicar la fuente Roboto al cuerpo del documento */
 body {
-    font-family: 'Roboto', sans-serif;
-    color: #4B60EB;
+    scroll-behavior: smooth;
+    font-family: 'Raleway', sans-serif;
+    color: #000000;
 }
 
-/* Aplicar la fuente Roboto a los elementos que desees */
+/* vxcvxcvxcv */
 h1,
 h2,
 p {
-    font-family: 'Roboto', sans-serif;
-    color: #4B60EB;
+    font-family: 'Raleway', sans-serif;
+    color: #000000;
 }
+
+
+/*NAVBAR*/
+.navbar {
+    background-color: #000000;
+
+    height: 10vh;
+    padding: 1.2rem;
+
+    font-family: 'Raleway';
+    box-shadow: 0px 0px 20px 0px #00000071;
+}
+
+/*Seccion del Hero index*/
+.hero {
+    /* margin-top: 10vh; */
+    height: 90vh;
+}
+
+.hero__contenedor {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero__imagen__contenedor {
+    /*conentedor imagen*/
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background-image: url(../img/1327593.jpeg);
+    background-position: center;
+    background-size: cover;
+    transform: scale(1.15);
+    animation: miAnimacion 13s infinite 1s;
+
+}
+
+@keyframes miAnimacion {
+    0% {
+        transform: scale(1.15);
+    }
+
+    50% {
+        transform: scale(1.32);
+    }
+
+    100% {
+        transform: scale(1.15);
+    }
+}
+
+.hero__textos {
+    /*textos*/
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    height: 100%;
+    width: 100%;
+}
+
+.hero__title {
+    font-size: 60px;
+    font-weight: bold;
+    color: #000000d7;
+}
+
+.hero__name1,
+.hero__name2 {
+    font-size: 40px;
+    font-weight: bold;
+    color: #000000d7;
+
+}
+
+.hero__btn {
+    margin-top: 10px;
+    padding: 9px 25px;
+    border: none;
+    background-color: rgba(255, 0, 0, 0.864);
+}
+
+.hero__btn:hover {
+
+    background-color: rgba(200, 17, 17, 0.892);
+}
+
+li a {
+    text-decoration: none;
+}
+
+
+.carrusel {
+    margin-top: 10vh;
+    width: 100%;
+    height: 90vh;
+}
+
+.carousel {
+    height: 900px;
+}
+
+/*Seccion del nav*/
+.navbar-brand {
+    color: #ffffff;
+}
+
+.navbar-nav {
+    gap: 30px;
+}
+
+.navbar .nav-link {
+    /*los inicios de sesion*/
+    color: #ffffff;
+}
+
+.navbar .nav-item a[href="https://themes.getbootstrap.com/"] {
+    color: #ffffff;
+}
+
+.icon-white {
+    fill: #ffffff;
+    width: 90px;
+    font-size: 40px;
+}
+
+
+.navbar-nav-svg path {
+    fill: #ffffff;
+}
+
+
+/*seccion del login*/
+.container__signin {
+    margin: 0 auto;
+    width: 100%;
+    height: 90vh;
+    background-color: red;
+}
+
+.container__signin__flex {
+    /*flex imagen y titulos*/
+    display: flex;
+    align-items: center;
+    margin-top: 10vh;
+    height: 100%;
+    /* border-radius: 25px; */
+    gap: 15px;
+    color: black;
+    background-image: linear-gradient(to right, #000000, #000000, #c7af9d);
+    /* background-color: linear; */
+
+}
+
+.container__sigin__titulos {
+    margin: 0 auto;
+    padding: 20px 40px;
+    border-radius: 12px;
+    background-color: #28033142;
+    /* background-color: white; */
+}
+
+.container__imagen__signin {
+    height: 100%;
+    width: 50%;
+    /* background-color: yellow; */
+}
+
+.imagen__signin {
+    width: 100%;
+    height: 100%;
+    border-radius: 25px 0 0 25px;
+    display: block;
+}
+
+
+.signin__titulo {
+    font-size: 60px;
+    color: rgba(0, 0, 0, 0.519);
+    color: white;
+    margin: 5px 0px;
+    padding: 10px 0px;
+}
+
+.form-control {
+    /*los formualrios*/
+    padding: 12.5px;
+    margin-top: 11px;
+}
+
+input,
+::placeholder {
+    font-family: "Raleway", sans-serif;
+}
+
+label {
+    color: white;
+}
+
+.forget {
+    color: white;
+    text-decoration: none;
+}
+
+.divisor {
+    color: white;
+}
+
+.btn__form {
+    width: 100%;
+    font-size: 1rem;
+    padding: 11.5px;
+}
+
+.btn_facebook {
+    width: 100%;
+    padding: 11.5px;
+    font-size: 1rem;
+    border: none;
+}
+
+.btn_twitter {
+    width: 100%;
+    padding: 11.5px;
+    font-size: 1rem;
+    margin-bottom: 15px;
+    border: none;
+}
+
+.btn_twitter:hover {
+    background-color: #3f9af5 !important;
+}
+
+.btn_facebook:hover {
+    background-color: #3759b6 !important;
+}
+
+.sigin__metodos {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.sigin__remember {
+    justify-content: space-around;
+}
+
+
+/*informacion*/
+
+.informacion {
+    width: 400px;
+    height: 200px;
+    background-image: linear-gradient(to right top, #00000060, #39032f79, #a38873df);
+    border-radius: 15px;
+    position: absolute;
+    top: 240px;
+    left: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.informacion:hover {
+    background-image: linear-gradient(to right top, #00000069, #50084287, #ad9482df);
+    background-size: 150% 150%;
+    /* Tamaño del gradiente */
+    animation: moverGradiente 5s infinite;
+}
+
+@keyframes moverGradiente {
+    0% {
+        background-position: 0% 0%;
+        /* Posición inicial del gradiente */
+    }
+
+    50% {
+        background-position: 100% 0%;
+        /* Posición final del gradiente */
+    }
+
+    100% {
+        background-position: 0% 0%;
+        /* Posición final del gradiente */
+    }
+}
+
+.informacion__mensaje {
+    font-size: 20px;
+    text-decoration: none;
+    text-align: center;
+    display: block;
+    width: 100%;
+    height: 100%;
+    line-height: 200px;
+    color: rgba(255, 255, 255, 0.846);
+
+}
+
+
+
+/*seccion del registro*/
+
+.container__singup {
+    margin: 0 auto;
+    width: 100%;
+    height: 90vh;
+    background-color: red;
+}
+
+.container__singup__flex {
+    /*flex imagen y titulos*/
+    display: flex;
+    align-items: center;
+    margin-top: 10vh;
+    height: 100%;
+    /* border-radius: 25px; */
+    gap: 15px;
+    color: black;
+    background-image: linear-gradient(to right, #000000, #000000, #c7af9d);
+    /* background-color: linear; */
+
+}
+
+.container__singup__titulos {
+    margin: 0 auto;
+    padding: 20px 40px;
+    border-radius: 12px;
+    background-color: #28033142;
+    /* background-color: white; */
+}
+
+.container__imagen__singup {
+    height: 100%;
+    width: 50%;
+    /* background-color: yellow; */
+
+}
+
+.imagen__signup {
+    width: 100%;
+    height: 100%;
+    border-radius: 25px 0 0 25px;
+    display: block;
+}
+
+
+.singup__titulo {
+    font-size: 60px;
+    color: whitesmoke;
+    margin: 5px 0px;
+    padding: 10px 0px;
+}
+
+.form-control {
+    /*los formualrios*/
+    padding: 12.2px;
+    margin-top: 3px;
+}
+
+.singup__password {
+    margin-bottom: 30px;
+}
+
+label {
+    color: white;
+}
+
+.divisor {
+    color: white;
+}
+
+.btn__form {
+    width: 100%;
+    font-size: 1rem;
+    padding: 11.5px;
+}
+
+.btn_facebook {
+    width: 100%;
+    padding: 11.5px;
+    font-size: 1rem;
+    border: none;
+}
+
+.btn_twitter {
+    width: 100%;
+    padding: 11.5px;
+    font-size: 1rem;
+    margin-bottom: 15px;
+    border: none;
+}
+
+.singup__metodos {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+
+/*OFFCANVAS*/
+.offcanvas-lg {
+    background-color: #000000;
+    /* Cambia el color de fondo */
+    color: #ffffff;
+    /* Cambia el color del texto */
+}
+
+.offcanvas-header {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    /* Cambia el borde inferior */
+}
+
+.offcanvas-title {
+    font-size: 1.5rem;
+    /* Cambia el tamaño del texto del título */
+}
+
+/*OTROS ESTILOS*/
+.display-4 {
+    color: #000000;
+    /* Color azul (puedes cambiar este valor por el color que desees) */
+    font-weight: bold;
+    /* Texto en negrita */
+    line-height: 1;
+    /* Altura de línea */
+    margin-bottom: 0.75rem;
+    /* Margen inferior */
+}
+
+.custom-dialog {
+    width: 400px;
+    /* Ancho del diálogo */
+    height: 250px;
+    /* Altura del diálogo */
+    border: 5px solid rgba(255, 255, 255, 0.1);
+    /* Cambiar el color del borde del diálogo */
+    border-radius: 10px;
+    /* Hacer que el borde sea redondeado */
+}
+
+.icon-danger {
+    fill: red;
+}
+
 
 /*OTROS ESTILOS*/
 /* BARRA DIVISORA */
@@ -89,72 +549,22 @@ p {
     }
 }
 
-/*NAVBAR*/
-.navbar {
-    background-color: #4B60EB;
-}
-
-.navbar-brand {
-    color: #ffffff;
-}
-
-.navbar .nav-link {
-    color: #ffffff;
-}
-
-.navbar .nav-item a[href="https://themes.getbootstrap.com/"] {
-    color: #ffffff;
-}
-
-.icon-white {
-    fill: #ffffff;
-}
-
-.navbar-nav-svg path {
-    fill: #ffffff;
-}
-
-/*OFFCANVAS*/
-.offcanvas-lg {
-    background-color: #4B60EB;
-    /* Cambia el color de fondo */
-    color: #ffffff;
-    /* Cambia el color del texto */
-}
-
-.offcanvas-header {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    /* Cambia el borde inferior */
-}
-
-.offcanvas-title {
-    font-size: 1.5rem;
-    /* Cambia el tamaño del texto del título */
-}
-
-/*OTROS ESTILOS*/
-.display-4 {
-    color: #4B60EB;
-    /* Color azul (puedes cambiar este valor por el color que desees) */
-    font-weight: bold;
-    /* Texto en negrita */
-    line-height: 1;
-    /* Altura de línea */
-    margin-bottom: 0.75rem;
-    /* Margen inferior */
-}
-
 .custom-dialog {
-    width: 400px;
-        /* Ancho del diálogo */
-        height: 250px;
-        /* Altura del diálogo */
-    border: 5px solid rgba(255, 255, 255, 0.1);
-    /* Cambiar el color del borde del diálogo */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    width: 80%;
+    max-width: 400px;
+    padding: 20px;
     border-radius: 10px;
-        /* Hacer que el borde sea redondeado */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    height: 300px;
 }
 
-.icon-danger {
-    fill: red;
+.custom-active-item {
+    background-color: black;
+    color: white;
 }

@@ -120,20 +120,6 @@
                                             <br>
 
                                             <button type="button" class="btn btn-primary" onclick="window.modal1.showModal();">Save changes</button>
-
-                                            <dialog class="custom-dialog" id="modal1">
-                                                <div style="text-align: center;"><svg class="navbar-nav-svg" viewBox="0 0 512 499.36" role="img" width="50"
-                                                        height="50">
-                                                        <title>Twitter</title>
-                                                        <use xlink:href="#exclamation" class="icon-danger" />
-                                                    </svg></div>
-                                                <h3 style="text-align: center;">Are you sure?</h3>
-                                                <p style="color: grey; text-align: center;">The password will be changed!</p>
-                                                <div style="text-align: center;">
-                                                    <a class="btn btn-danger" onclick="submitForm()">Yes,Change</a>
-                                                    <button class="btn btn-success" onclick="window.modal1.close();">Cancel</button>
-                                                </div>
-                                            </dialog>
                                         </form>
                                     </div>
                                     <hr class="my-5">
@@ -158,6 +144,20 @@
                                             <button type="submit" class="btn btn-primary">Save changes</button>
                                         </form>
                                     </div>
+
+                                    <dialog class="custom-dialog" id="modal1">
+                                        <div style="text-align: center;"><svg class="navbar-nav-svg" viewBox="0 0 512 499.36" role="img" width="50"
+                                                height="50">
+                                                <title>Twitter</title>
+                                                <use xlink:href="#exclamation" class="icon-danger" />
+                                            </svg></div>
+                                        <h3 style="text-align: center;">Are you sure?</h3>
+                                        <p style="color: grey; text-align: center;">The password will be changed!</p>
+                                        <div style="text-align: center;">
+                                            <a class="btn btn-danger" onclick="submitForm()">Yes,Change</a>
+                                            <button class="btn btn-success" onclick="window.modal1.close();">Cancel</button>
+                                        </div>
+                                    </dialog>
                                 </div>
                             </div>
                         </div>
