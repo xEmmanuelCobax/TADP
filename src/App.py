@@ -18,14 +18,16 @@ app.config["MYSQL_PASSWORD"] = config.MYSQL_PASSWORD
 app.config["SECRET_KEY"] = config.HEX_SEC_KEY  # Configurar la clave secreta
 mysql = MySQL(app)
 
-
+# index principal
 @app.route("/")
 def index():
     if "email" in session:
-        return render_template("index.html", email=session["email"])
+        logged_in = True
+        return render_template(
+            "index.html", email=session["email"], logged_in=logged_in
+        )
     else:
         return render_template("index.html")
-
 
 @app.route("/sign", methods=["GET", "POST"])
 def sign():
