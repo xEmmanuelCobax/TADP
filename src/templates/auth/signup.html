@@ -1,0 +1,57 @@
+{% extends 'top navbar/top-navbar.html' %} 
+{% block title %} - Sign Up {% endblock %} 
+{% block content %}
+<div class="container-fluid">
+  <div class="d-flex justify-content-center align-items-center" style="height: 100vh">
+    <div class="col-xl-10">
+      <div class="row">
+        <!-- Columnas para la imagen -->
+        <div class="col-xl-4 offset-xl-1 mb-4 mb-xl-0">
+          <!-- Aquí se coloca la imagen -->
+          <img src="{{ url_for('send_static', path='img/signup.png') }}" class="img-fluid w-100" alt="Phone image" />
+          <!-- La clase w-100 estira la imagen al 100% del ancho de la columna -->
+        </div>
+
+        <!-- Columnas para el formulario -->
+        <div class="col-xl-5 offset-xl-1">
+          <!-- Aquí comienza la sección del formulario -->
+          <form method="post" action="{{ url_for('signup') }}">
+            <h1 class="fw-bold mb-4 signin__titulo text-center">sign Up</h1>
+            <!-- Username input -->
+            <div class="form-outline mb-4">
+              <label for="username">Username</label>
+              <input type="text" class="form-control mt-2 {% if user_found %}is-invalid{% endif %}" id="username" name="username" required />
+              {% if user_found %}
+              <div class="invalid-feedback">{{ error_message }}</div>
+              {% endif %}
+            </div>
+            <!-- Email input -->
+            <div class="form-outline mb-4">
+              <label for="email">Email address</label>
+              <input type="email" class="form-control mt-2 {% if email_found %}is-invalid{% endif %}" id="email" name="email" required />
+              {% if email_found %}
+              <div class="invalid-feedback">{{ error_message }}</div>
+              {% endif %}
+            </div>
+            <!-- Password input -->
+            <div class="form-outline mb-4">
+              <label for="password">Password</label>
+              <input type="password" class="form-control mt-2 signup__password" id="password" name="password" required />
+            </div>
+            <div class="d-flex flex-column align-items-left mb-4 sigin__remember">
+              <!-- <p class="informacion__mensaje">*Create your Specify account with your work email to sync 
+                          all your design data across your design system</p>  -->
+              <a class="informacion__mensaje" href="/sign">¿Ya tienes una cuenta?</a>
+            </div>
+            <!-- Submit button -->
+            <button type="submit" class="btn__form btn btn-primary btn-lg btn-block">Sign Up</button>
+          </form>
+          <!-- Fin del formulario -->
+        </div>
+        <!-- Fin de la columna -->
+      </div>
+      <!-- Fin de la fila -->
+    </div>
+  </div>
+</div>
+{% endblock %}

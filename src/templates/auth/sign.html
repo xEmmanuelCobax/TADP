@@ -1,0 +1,68 @@
+{% extends 'top navbar/top-navbar.html' %} 
+{% block title %} - sign in {% endblock %} 
+{% block content %}
+<div class="container-fluid">
+  <div class="d-flex justify-content-center align-items-center" style="height: 100vh;">
+    <!-- 56px es la altura aproximada del navbar, ajusta este valor según sea necesario -->
+    <div class="col-xl-10">
+      <div class="row">
+        <!-- Columnas para la imagen -->
+        <div class="col-xl-4 offset-xl-1 mb-4 mb-xl-0">
+          <!-- Aquí se coloca la imagen -->
+          <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.svg" class="img-fluid w-100" alt="Phone image" />
+          <!-- La clase w-100 estira la imagen al 100% del ancho de la columna -->
+        </div>
+
+        <!-- Columnas para el formulario -->
+        <div class="col-xl-5 offset-xl-1">
+          <!-- Aquí comienza la sección del formulario -->
+          <form method="post" action="{{ url_for('sign') }}">
+            <!-- Eliminar la clase text-end del formulario -->
+            <h1 class="fw-bold mb-4 signin__titulo text-center">sign in</h1>
+            <!-- Agregar la clase text-center para centrar el título -->
+            <!-- Email input -->
+            <div class="form-outline mb-4">
+              <label for="email">Email address</label>
+              <!-- Eliminar la clase text-end de la etiqueta -->
+              <input type="email" value="{{ email }}" class="form-control mt-2 {% if email_not_found %}is-invalid{% endif %}" id="email" name="email" required />
+              <!-- Eliminar la clase text-end del campo de entrada -->
+              {% if email_not_found %}
+              <div class="invalid-feedback">Email not found.</div>
+              <!-- Eliminar la clase text-end del mensaje de error -->
+              {% endif %}
+            </div>
+            <!-- Password input -->
+            <div class="form-outline mb-4">
+              <label for="password">Password</label>
+              <!-- Eliminar la clase text-end de la etiqueta -->
+              <input type="password" class="form-control mt-2 {% if bad_password %}is-invalid{% endif %}" id="password" name="password" required />
+              <!-- Eliminar la clase text-end del campo de entrada -->
+              {% if bad_password %}
+              <div class="invalid-feedback">Invalid password.</div>
+              <!-- Eliminar la clase text-end del mensaje de error -->
+              {% endif %}
+            </div>
+
+            <div class="d-flex flex-column align-items-left mb-4 sigin__remember">
+                <!-- Checkbox -->
+                <div class="form-check mb-2">
+                  <input class="form-check-input" type="checkbox" value="" id="form1Example3" checked />
+                  <label class="form-check-label" for="form1Example3">Remember me</label>
+                </div>
+                <!-- Enlace "Forgot password?" -->
+                <a href="#!" class="forget">Forgot password?</a>
+              </div>
+
+            <!-- Submit button -->
+            <button type="submit" class="btn__form btn btn-primary btn-lg btn-block">Sign in</button>
+            <!-- Eliminar la clase text-end del botón -->
+          </form>
+          <!-- Fin del formulario -->
+        </div>
+        <!-- Fin de la columna -->
+      </div>
+      <!-- Fin de la fila -->
+    </div>
+  </div>
+</div>
+{% endblock %}
