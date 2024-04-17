@@ -8,7 +8,7 @@ from flask import (
     send_from_directory,
     session,
 )
-
+from datetime import datetime
 import config
 from flask_mysqldb import MySQL
 
@@ -19,23 +19,23 @@ app.config["MYSQL_PASSWORD"] = config.MYSQL_PASSWORD
 app.config["SECRET_KEY"] = config.HEX_SEC_KEY  # Configurar la clave secreta
 mysql = MySQL(app)
 
-# index principal
+
+# Index principal
 @app.route("/")
 def index():
     # Verificar si hay una dirreccion de correo dentro de session
     if "email" in session:
-        # Establece la variable en True si el usuario esta autenticado
-        logged_in = True
         # Renderizar la plantilla index.html con la dirrecion del correo y la variable
-        return render_template(
-            "index.html", email=session["email"], logged_in=logged_in
-        )
+        return render_template("index.html", email=session["email"])
     else:
         return render_template("index.html")
 
+
+# Sign
 @app.route("/sign", methods=["GET", "POST"])
 def sign():
     if "email" in session:
+
         return render_template("index.html", email=session["email"])
     else:
         if request.method == "POST":
@@ -51,7 +51,9 @@ def sign():
             if not existing_email:
                 # El correo electrónico no está registrado
                 email_not_found = True
-                return render_template("auth/sign.html", email_not_found=email_not_found)
+                return render_template(
+                    "auth/sign.html", email_not_found=email_not_found
+                )
             else:
                 # El correo electrónico está registrado
 
@@ -68,6 +70,7 @@ def sign():
         return render_template("auth/sign.html")
 
 
+# Sign-Up
 @app.route("/signup", methods=["GET", "POST"])
 def signup():
     if "email" in session:
@@ -89,14 +92,18 @@ def signup():
                 email_found = True
                 error_message = "The email is already registered."
                 return render_template(
-                    "auth/signup.html", email_found=email_found, error_message=error_message
+                    "auth/signup.html",
+                    email_found=email_found,
+                    error_message=error_message,
                 )
 
             elif existing_user:
                 user_found = True
                 error_message = "User already exists. Please choose another email."
                 return render_template(
-                    "auth/signup.html", user_found=user_found, error_message=error_message
+                    "auth/signup.html",
+                    user_found=user_found,
+                    error_message=error_message,
                 )
             else:
                 # registrar en base de datos
@@ -104,12 +111,13 @@ def signup():
                     "INSERT INTO employee (name,email, password) VALUES (%s, %s, %s)",
                     (name, email, password),
                 )
-                mysql.connection.commit() 
+                mysql.connection.commit()
                 return render_template("auth/sign.html", registration_successful=True)
 
         return render_template("auth/signup.html")
 
 
+# Sign-Out
 @app.route("/Signout")
 def Signout():
     if "email" in session:
@@ -122,6 +130,7 @@ def Signout():
         return redirect(url_for("sign"))
 
 
+# Registro exitoso
 @app.route("/successful_registration")
 def successful_registration():
     registration_successful = request.args.get("registration_successful")
@@ -131,6 +140,7 @@ def successful_registration():
         return index()
 
 
+# Apartado perfil
 @app.route("/profile")
 def profile():
     if "email" in session:
@@ -148,6 +158,7 @@ def profile():
         return redirect(url_for("sign"))
 
 
+# Apartado de cuanta en ajustes
 @app.route("/settings/account")
 def account():
     if "email" in session:
@@ -163,6 +174,7 @@ def account():
         return redirect(url_for("sign"))
 
 
+# Apartado de seguridad en ajustes
 @app.route("/settings/security")
 def security():
     if "email" in session:
@@ -178,6 +190,7 @@ def security():
         return redirect(url_for("sign"))
 
 
+# Apartado de borrar cuenta en ajustes
 @app.route("/settings/deleteaccount")
 def deleteaccount():
     if "email" in session:
@@ -193,6 +206,7 @@ def deleteaccount():
         return redirect(url_for("sign"))
 
 
+# Cambiar contraseña
 @app.route("/settings/ChangePassword", methods=["POST"])
 def ChangePassword():
     if "email" in session and request.method == "POST":
@@ -254,6 +268,7 @@ def ChangePassword():
         return redirect(url_for("sign"))
 
 
+# Cambiar Email
 @app.route("/settings/ChangeEmail", methods=["POST"])
 def ChangeEmail():
     if "email" in session and request.method == "POST":
@@ -292,6 +307,8 @@ def ChangeEmail():
             return render_template("Change.HTML", ChangedEmail=ChangedEmail)
     return redirect(url_for("sign"))
 
+
+# Cambiar propiedades
 @app.route("/settings/ChangeProfile", methods=["POST"])
 def ChangeProfile():
     if "email" in session and request.method == "POST":
@@ -337,6 +354,7 @@ def ChangeProfile():
         return redirect(url_for("sign"))
 
 
+# Borrar cuenta
 @app.route("/Delete_Account")
 def Delete_Account():
     if "email" in session:
@@ -350,6 +368,71 @@ def Delete_Account():
             "email", None
         )  # Eliminar la clave 'email' de la sesión si está presente
         return render_template("sign.html")
+    else:
+        return redirect(url_for("sign"))
+
+
+# TABLAS
+@app.route("/tasks", methods=["GET"])
+def tasks():
+    if "email" in session:
+        cur = mysql.connection.cursor()
+        cur.execute("SELECT * FROM tasks")
+        tasks = cur.fetchall()
+        cur.close()
+        return render_template("tasks.html", tasks=tasks, email=session["email"])
+    else:
+        return redirect(url_for("sign"))
+
+
+@app.route("/add_task", methods=["POST"])
+def add_task():
+    if "email" in session and request.method == "POST":
+        nombre = request.form["nombre"]
+        descripcion = request.form["descripcion"]
+        cantidad = request.form["cantidad"]
+        cur = mysql.connection.cursor()
+        # Obtener la fecha y hora actual
+        fecha_actual = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        cur.execute(
+            "INSERT INTO tasks (nombre, cantidad, descripcion, email, fecha) VALUES (%s, %s, %s, %s, %s)",
+            (nombre, cantidad, descripcion, session["email"], fecha_actual),
+        )
+        mysql.connection.commit()
+        cur.close()
+        return redirect(url_for("tasks"))
+    else:
+        return redirect(url_for("sign"))
+
+
+@app.route("/edit_task/<int:id>", methods=["POST"])
+def edit_task(id):
+    if "email" in session and request.method == "POST":
+        cur = mysql.connection.cursor()
+        nombre = request.form["nombre"]
+        descripcion = request.form["descripcion"]
+        cantidad = request.form["cantidad"]
+        cur.execute(
+            "UPDATE tasks SET nombre = %s, cantidad= %s, descripcion = %s  WHERE id = %s",
+            (nombre, cantidad, descripcion, id),
+        )
+        mysql.connection.commit()
+        cur.close()
+        return redirect(url_for("tasks"))
+    else:
+        return redirect(url_for("sign"))
+
+
+@app.route("/delete_task", methods=["POST"])
+def delete_task():
+    if "email" in session:
+        cur = mysql.connection.cursor()
+        id = request.form["task_id"]
+        print("Valor de id:", id)
+        cur.execute("DELETE FROM tasks WHERE id = %s", (id,))
+        mysql.connection.commit()
+        cur.close()
+        return redirect(url_for("tasks"))
     else:
         return redirect(url_for("sign"))
 
