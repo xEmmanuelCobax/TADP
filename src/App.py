@@ -8,7 +8,8 @@ from flask import (
     send_from_directory,
     session,
 )
-import os, config
+
+import config
 from flask_mysqldb import MySQL
 
 app = Flask(__name__)
@@ -21,8 +22,11 @@ mysql = MySQL(app)
 # index principal
 @app.route("/")
 def index():
+    # Verificar si hay una dirreccion de correo dentro de session
     if "email" in session:
+        # Establece la variable en True si el usuario esta autenticado
         logged_in = True
+        # Renderizar la plantilla index.html con la dirrecion del correo y la variable
         return render_template(
             "index.html", email=session["email"], logged_in=logged_in
         )
@@ -39,7 +43,7 @@ def sign():
             password = request.form["password"]
 
             cur = mysql.connection.cursor()
-            cur.execute("SELECT * FROM users WHERE email = %s", (email,))
+            cur.execute("SELECT * FROM employee WHERE email = %s", (email,))
             existing_email = cur.fetchone()
             cur.close()
             print(existing_email)
@@ -47,7 +51,7 @@ def sign():
             if not existing_email:
                 # El correo electrónico no está registrado
                 email_not_found = True
-                return render_template("sign.html", email_not_found=email_not_found)
+                return render_template("auth/sign.html", email_not_found=email_not_found)
             else:
                 # El correo electrónico está registrado
 
@@ -59,9 +63,9 @@ def sign():
                     # Contraseña incorrecta
                     bad_password = True
                     return render_template(
-                        "sign.html", bad_password=bad_password, email=email
+                        "auth/sign.html", bad_password=bad_password, email=email
                     )
-        return render_template("sign.html")
+        return render_template("auth/sign.html")
 
 
 @app.route("/signup", methods=["GET", "POST"])
@@ -75,38 +79,35 @@ def signup():
             password = request.form.get("password")
 
             cur = mysql.connection.cursor()
-            cur.execute("SELECT * FROM users WHERE email = %s", (email,))
+            cur.execute("SELECT * FROM employee WHERE email = %s", (email,))
             existing_email = cur.fetchone()
 
-            cur.execute("SELECT * FROM users WHERE name = %s", (name,))
+            cur.execute("SELECT * FROM employee WHERE name = %s", (name,))
             existing_user = cur.fetchone()
 
             if existing_email:
                 email_found = True
                 error_message = "The email is already registered."
                 return render_template(
-                    "signup.html", email_found=email_found, error_message=error_message
+                    "auth/signup.html", email_found=email_found, error_message=error_message
                 )
 
             elif existing_user:
                 user_found = True
                 error_message = "User already exists. Please choose another email."
                 return render_template(
-                    "signup.html", user_found=user_found, error_message=error_message
+                    "auth/signup.html", user_found=user_found, error_message=error_message
                 )
             else:
                 # registrar en base de datos
-                cur.execute( 
-                    "INSERT INTO users (name,email, password) VALUES (%s, %s, %s)",
+                cur.execute(
+                    "INSERT INTO employee (name,email, password) VALUES (%s, %s, %s)",
                     (name, email, password),
                 )
                 mysql.connection.commit() 
-                session["email"] = email
-                return redirect(
-                    url_for("successful_registration", registration_successful=True)
-                )
+                return render_template("auth/sign.html", registration_successful=True)
 
-        return render_template("signup.html")
+        return render_template("auth/signup.html")
 
 
 @app.route("/Signout")
@@ -116,7 +117,7 @@ def Signout():
         session.pop(
             "email", None
         )  # Eliminar la clave 'email' de la sesión si está presente
-        return render_template("sign.html")
+        return render_template("auth/sign.html")
     else:
         return redirect(url_for("sign"))
 
@@ -135,7 +136,7 @@ def profile():
     if "email" in session:
         email = session["email"]
         cur = mysql.connection.cursor()
-        cur.execute("SELECT * FROM users WHERE email = %s", (email,))
+        cur.execute("SELECT * FROM employee WHERE email = %s", (email,))
         user_data = cur.fetchone()
         cur.close()
         print(user_data[1])
@@ -152,12 +153,9 @@ def account():
     if "email" in session:
         email = session["email"]
         cur = mysql.connection.cursor()
-        cur.execute("SELECT * FROM users WHERE email = %s", (email,))
+        cur.execute("SELECT * FROM employee WHERE email = %s", (email,))
         user_data = cur.fetchone()
         cur.close()
-        print(user_data[1])  # USERNAME
-        print(user_data[2])  # EMAIL
-        print(user_data[3])  # PASSWORD
         return render_template(
             "account.html", email=session["email"], user_data=user_data
         )
@@ -170,7 +168,7 @@ def security():
     if "email" in session:
         email = session["email"]
         cur = mysql.connection.cursor()
-        cur.execute("SELECT * FROM users WHERE email = %s", (email,))
+        cur.execute("SELECT * FROM employee WHERE email = %s", (email,))
         user_data = cur.fetchone()
         cur.close()
         return render_template(
@@ -185,7 +183,7 @@ def deleteaccount():
     if "email" in session:
         email = session["email"]
         cur = mysql.connection.cursor()
-        cur.execute("SELECT * FROM users WHERE email = %s", (email,))
+        cur.execute("SELECT * FROM employee WHERE email = %s", (email,))
         user_data = cur.fetchone()
         cur.close()
         return render_template(
@@ -200,7 +198,7 @@ def ChangePassword():
     if "email" in session and request.method == "POST":
         email = session["email"]
         cur = mysql.connection.cursor()
-        cur.execute("SELECT * FROM users WHERE email = %s", (email,))
+        cur.execute("SELECT * FROM employee WHERE email = %s", (email,))
         user_data = cur.fetchone()
 
         password = request.form.get("inputPasswordCurrent")
@@ -214,7 +212,7 @@ def ChangePassword():
             and new_password
         ):
             cur.execute(
-                "UPDATE users SET password = %s WHERE email = %s",
+                "UPDATE employee SET password = %s WHERE email = %s",
                 (new_password, email),
             )
             mysql.connection.commit()
@@ -263,10 +261,10 @@ def ChangeEmail():
         newemail = request.form.get("email")
 
         cur = mysql.connection.cursor()
-        cur.execute("SELECT * FROM users WHERE email = %s", (email,))
+        cur.execute("SELECT * FROM employee WHERE email = %s", (email,))
         user_data = cur.fetchone()
 
-        cur.execute("SELECT * FROM users WHERE email = %s", (newemail,))
+        cur.execute("SELECT * FROM employee WHERE email = %s", (newemail,))
         existing_email = cur.fetchone()
         cur.close()
 
@@ -284,7 +282,7 @@ def ChangeEmail():
         else:
             cur = mysql.connection.cursor()
             cur.execute(
-                "UPDATE users SET email = %s WHERE email = %s",
+                "UPDATE employee SET email = %s WHERE email = %s",
                 (newemail, email),
             )
             mysql.connection.commit()
@@ -293,10 +291,6 @@ def ChangeEmail():
             ChangedEmail = True
             return render_template("Change.HTML", ChangedEmail=ChangedEmail)
     return redirect(url_for("sign"))
-
-
-from flask import flash
-
 
 @app.route("/settings/ChangeProfile", methods=["POST"])
 def ChangeProfile():
@@ -309,12 +303,12 @@ def ChangeProfile():
 
         cur = mysql.connection.cursor()
         # Encontrar los datos del usuario en la base de datos
-        cur.execute("SELECT * FROM users WHERE email = %s", (email,))
+        cur.execute("SELECT * FROM employee WHERE email = %s", (email,))
         user_data = cur.fetchone()
 
         # Verificar si el nuevo nombre ya existe en la base de datos
         cur.execute(
-            "SELECT * FROM users WHERE name = %s AND email != %s", (new_name, email)
+            "SELECT * FROM employee WHERE name = %s AND email != %s", (new_name, email)
         )
         existing_user = cur.fetchone()
 
@@ -332,7 +326,7 @@ def ChangeProfile():
         else:
             # Actualizar el perfil si no se encuentra otro usuario con el mismo nombre
             cur.execute(
-                "UPDATE users SET name = %s, phone = %s WHERE email = %s",
+                "UPDATE employee SET name = %s, phone = %s WHERE email = %s",
                 (new_name, new_phone, email),
             )
             mysql.connection.commit()
@@ -349,7 +343,7 @@ def Delete_Account():
         email = session.get("email")  # Obtener el valor de 'email' de la sesión
         # Conectarse a la base de datos y eliminar al usuario
         cur = mysql.connection.cursor()
-        cur.execute("DELETE FROM users WHERE email = %s", (email,))
+        cur.execute("DELETE FROM employee WHERE email = %s", (email,))
         mysql.connection.commit()
         cur.close()
         session.pop(
