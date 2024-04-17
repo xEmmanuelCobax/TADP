@@ -25,8 +25,14 @@ mysql = MySQL(app)
 def index():
     # Verificar si hay una dirreccion de correo dentro de session
     if "email" in session:
+        full_name = (
+            f"{session.get('name', '').strip()} {session.get('last_name', '').strip()}"
+        )
+        print(full_name)
         # Renderizar la plantilla index.html con la dirrecion del correo y la variable
-        return render_template("index.html", email=session["email"])
+        return render_template(
+            "index.html", email=session["email"], full_name=full_name
+        )
     else:
         return render_template("index.html")
 
@@ -52,67 +58,85 @@ def sign():
                 # El correo electrónico no está registrado
                 email_not_found = True
                 return render_template(
-                    "auth/sign.html", email_not_found=email_not_found
+                    "auth/signin.html", email_not_found=email_not_found
                 )
             else:
                 # El correo electrónico está registrado
 
-                if existing_email[3] == password:
+                if existing_email[4] == password:
                     # Contraseña correcta
                     session["email"] = email
+                    session["name"] = existing_email[1]
+                    session["last_name"] = existing_email[2]
                     return redirect(url_for("index", user=email))
                 else:
                     # Contraseña incorrecta
                     bad_password = True
                     return render_template(
-                        "auth/sign.html", bad_password=bad_password, email=email
+                        "auth/signin.html", bad_password=bad_password, email=email
                     )
-        return render_template("auth/sign.html")
+        return render_template("auth/signin.html")
 
 
 # Sign-Up
 @app.route("/signup", methods=["GET", "POST"])
 def signup():
+    # Verificar si hay una dirreccion de correo dentro de session
     if "email" in session:
         return render_template("index.html", email=session["email"])
     else:
         if request.method == "POST":
-            name = request.form.get("username")
+            email_found = False
+            user_found = False
+            lastname_error = False
+
+            name = request.form.get("name")
+            lastname = request.form.get("lastname")
             email = request.form.get("email")
             password = request.form.get("password")
+
+            aux = lastname.split()
+            if len(aux) >= 2:
+                apellido_paterno = aux[0]  # El primer elemento es el apellido paterno
+                apellido_materno = aux[-1]  # El último elemento es el apellido materno
+                print("Apellido paterno:", apellido_paterno)
+                print("Apellido materno:", apellido_materno)
+            else:
+                lastname_error = True
 
             cur = mysql.connection.cursor()
             cur.execute("SELECT * FROM employee WHERE email = %s", (email,))
             existing_email = cur.fetchone()
 
-            cur.execute("SELECT * FROM employee WHERE name = %s", (name,))
+            cur.execute(
+                "SELECT * FROM employee WHERE name = %s AND last_name = %s",
+                (name, lastname),
+            )
             existing_user = cur.fetchone()
 
+            # Existe el correo en la base de datos
             if existing_email:
                 email_found = True
-                error_message = "The email is already registered."
-                return render_template(
-                    "auth/signup.html",
-                    email_found=email_found,
-                    error_message=error_message,
-                )
-
-            elif existing_user:
+            # Existe el usuario en la base de datos
+            if existing_user:
                 user_found = True
-                error_message = "User already exists. Please choose another email."
+            if existing_email or existing_user or lastname_error:
                 return render_template(
                     "auth/signup.html",
                     user_found=user_found,
-                    error_message=error_message,
+                    email_found=email_found,
+                    lastname_error=lastname_error,
                 )
+
+            # No hay ningun error
             else:
                 # registrar en base de datos
                 cur.execute(
-                    "INSERT INTO employee (name,email, password) VALUES (%s, %s, %s)",
-                    (name, email, password),
+                    "INSERT INTO employee (name, last_name, email, password) VALUES (%s, %s, %s, %s)",
+                    (name, lastname, email, password),
                 )
                 mysql.connection.commit()
-                return render_template("auth/sign.html", registration_successful=True)
+                return render_template("auth/signin.html", registration_successful=True)
 
         return render_template("auth/signup.html")
 
@@ -125,7 +149,7 @@ def Signout():
         session.pop(
             "email", None
         )  # Eliminar la clave 'email' de la sesión si está presente
-        return render_template("auth/sign.html")
+        return render_template("auth/signin.html")
     else:
         return redirect(url_for("sign"))
 
@@ -149,8 +173,6 @@ def profile():
         cur.execute("SELECT * FROM employee WHERE email = %s", (email,))
         user_data = cur.fetchone()
         cur.close()
-        print(user_data[1])
-        print(user_data[2])
         return render_template(
             "profile.html", email=session["email"], user_data=user_data
         )
@@ -380,7 +402,7 @@ def tasks():
         cur.execute("SELECT * FROM tasks")
         tasks = cur.fetchall()
         cur.close()
-        return render_template("tasks.html", tasks=tasks, email=session["email"])
+        return render_template("Products/add-products.html", tasks=tasks, email=session["email"])
     else:
         return redirect(url_for("sign"))
 
