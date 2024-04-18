@@ -1,0 +1,30 @@
+body.dark-mode {
+    background-color: #333;
+    color: #fff;
+  }
+
+  /* Estilos adicionales para la barra de navegación lateral izquierda */
+  .sidebar {
+    position: fixed;
+    left: 0;
+    height: 100%;
+    width: 50px; /* Ancho de la barra de navegación */
+    padding-top: 3.5rem; /* Espacio para evitar la superposición con la barra de navegación superior */
+  }
+  /* Ajustes para los iconos en modo claro */
+  .sidebar .nav-link .bi {
+    color: #000; /* Color de los iconos en modo claro */
+  }
+
+  /* Ajustes para los iconos en modo oscuro */
+  .dark-mode .sidebar .nav-link .bi {
+    color: #fff; /* Color de los iconos en modo oscuro */
+  }
+
+  .nav-link .ms-2 {
+    display: none; /* Oculta el texto inicialmente */
+  }
+
+  .nav-link i:hover + .ms-2 {
+    display: inline; /* Muestra el texto cuando el cursor está sobre el icono */
+  }
