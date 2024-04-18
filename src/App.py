@@ -28,7 +28,6 @@ def index():
         full_name = (
             f"{session.get('name', '').strip()} {session.get('last_name', '').strip()}"
         )
-        print(full_name)
         # Renderizar la plantilla index.html con la dirrecion del correo y la variable
         return render_template(
             "index.html", email=session["email"], full_name=full_name
@@ -37,7 +36,7 @@ def index():
         return render_template("index.html")
 
 
-# Sign
+# Signin
 @app.route("/sign", methods=["GET", "POST"])
 def sign():
     if "email" in session:
@@ -52,7 +51,6 @@ def sign():
             cur.execute("SELECT * FROM employee WHERE email = %s", (email,))
             existing_email = cur.fetchone()
             cur.close()
-            print(existing_email)
 
             if not existing_email:
                 # El correo electrónico no está registrado
@@ -68,7 +66,9 @@ def sign():
                     session["email"] = email
                     session["name"] = existing_email[1]
                     session["last_name"] = existing_email[2]
-                    return redirect(url_for("index", user=email))
+                    # return redirect(url_for("index", user=email))
+                    full_name = f"{session.get('name', '').strip()} {session.get('last_name', '').strip()}"
+                    return render_template("profile/welcome-user.html", user=full_name)
                 else:
                     # Contraseña incorrecta
                     bad_password = True
@@ -99,8 +99,6 @@ def signup():
             if len(aux) >= 2:
                 apellido_paterno = aux[0]  # El primer elemento es el apellido paterno
                 apellido_materno = aux[-1]  # El último elemento es el apellido materno
-                print("Apellido paterno:", apellido_paterno)
-                print("Apellido materno:", apellido_materno)
             else:
                 lastname_error = True
 
@@ -305,7 +303,6 @@ def ChangeEmail():
         existing_email = cur.fetchone()
         cur.close()
 
-        print(existing_email)
         if existing_email:
             email_found = True
             error_message = "The email is already registered."
@@ -450,7 +447,6 @@ def delete_task():
     if "email" in session:
         cur = mysql.connection.cursor()
         id = request.form["task_id"]
-        print("Valor de id:", id)
         cur.execute("DELETE FROM tasks WHERE id = %s", (id,))
         mysql.connection.commit()
         cur.close()
